@@ -9,15 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+
+public function up()
 {
-    Schema::create('users', function (Blueprint $table) {
+    Schema::create('favorites', function (Blueprint $table) {
         $table->id();
-        $table->string('name');
-        $table->string('email')->unique();
-        $table->string('password');
-        $table->enum('role', ['admin', 'lessor', 'renter'])->default('renter'); 
-        $table->text('address')->nullable();
+        $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+        $table->foreignId('property_id')->constrained('properties')->onDelete('cascade'); // العقار المفضل
         $table->timestamps();
     });
 }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('favorites');
     }
 };
