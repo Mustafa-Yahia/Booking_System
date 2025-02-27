@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RenterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,7 +73,9 @@ Route::get('/', function () {
 
 
 
-
+// Route::get('/update/{id}', [RenterController::class, 'edit']);
+// Route::put('/update/{id}', [RenterController::class, 'update'])->name('renter.update');
+Route::Resource('renter', RenterController::class);
 
 
 
