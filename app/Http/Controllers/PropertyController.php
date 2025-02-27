@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Property;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class PropertyController extends Controller
 {
@@ -12,7 +14,8 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        //
+        $properties = Property::all();
+        return view('index', compact('properties')); 
     }
 
     /**
@@ -62,4 +65,7 @@ class PropertyController extends Controller
     {
         //
     }
+
+
+
 }
