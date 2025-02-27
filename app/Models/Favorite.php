@@ -21,6 +21,5 @@ class Favorite extends Model
     public function property()
     {
         return $this->belongsTo(Property::class, 'property_id');
-        // this one to many relationship
     }
 }
