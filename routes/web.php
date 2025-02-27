@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RenterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PropertyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 // Majd
@@ -125,6 +126,8 @@ Route::Resource('renter', RenterController::class);
 
 
 //Mustafa
+
+Route::get('/', [PropertyController::class, 'index'])->name('home');
 
 
 
