@@ -3,63 +3,108 @@
 namespace App\Http\Controllers;
 
 use App\Models\Property;
+use App\Models\PropertyImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class PropertyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function dashboard()
+    {
+        $properties = Property::all();
+        return view('lessor.dashboard', compact('properties'));
+    }
+
     public function index()
     {
-        //
+        $properties = Property::all();
+        return view('lessor.properties.index', compact('properties'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('lessor.properties.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'price_per_day' => 'required|numeric',
+            'type' => 'required|string|max:255',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $property = Property::create([
+            'user_id' => 1,
+            'title' => $request->title,
+            'description' => $request->description,
+            'location' => $request->location,
+            'price_per_day' => $request->price_per_day,
+            'status' => 'available',
+            'type' => $request->type,
+        ]);
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('property_images', 'public');
+                $property->images()->create(['image_path' => $path]);
+            }
+        }
+
+        return redirect()->route('lessor.properties.index')->with('success', 'Property added successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Property $property)
-    {
-        //
-    }
+{
+    $property->load('images');
+    return view('lessor.properties.show', compact('property'));
+}
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Property $property)
-    {
-        //
-    }
+public function edit(Property $property)
+{
+    $property->load('images');
+    return view('lessor.properties.edit', compact('property'));
+}
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, Property $property)
     {
-        //
-    }
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'price_per_day' => 'required|numeric',
+            'type' => 'required|string|max:255',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
+        $property->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'location' => $request->location,
+            'price_per_day' => $request->price_per_day,
+            'type' => $request->type,
+        ]);
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('property_images', 'public');
+                PropertyImage::create([
+                    'property_id' => $property->id,
+                    'image_path' => $path,
+                ]);
+            }
+        }
+
+        return redirect()->route('lessor.properties.edit', $property->id)->with('success', 'Property updated successfully!');
+        }
+
     public function destroy(Property $property)
     {
-        //
+        $property->delete();
+        return redirect()->route('lessor.properties.index')->with('success', 'Property deleted successfully!');
     }
 }
