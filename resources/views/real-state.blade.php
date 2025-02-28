@@ -31,6 +31,7 @@
                 </form>
             </div>
 
+            <!-- عرض العقارات -->
             <div class="row">
                 @foreach($properties as $property)
                 <div class="col-md-4 mb-4">
