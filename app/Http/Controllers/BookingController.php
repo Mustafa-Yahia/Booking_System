@@ -28,7 +28,15 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+        
+        $request->validate([
+            'checkin' => 'required|date',
+            'checkout' => 'required|date',
+            'guests' => 'required|numeric',
+            'property_id' => 'required|exists:properties,id'
+        ]);
+
     }
 
     /**

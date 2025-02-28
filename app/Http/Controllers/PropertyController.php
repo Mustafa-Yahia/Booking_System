@@ -15,7 +15,7 @@ class PropertyController extends Controller
     public function index()
     {
         $properties = Property::all();
-        return view('index', compact('properties')); 
+        return view('index', compact('properties'));
     }
 
     /**
@@ -37,9 +37,11 @@ class PropertyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Property $property)
+    public function show(String $id)
     {
-        //
+        $images = Property::find($id)->images;
+        $property = Property::find($id);
+        return view('properties.show', compact('property', 'images'));
     }
 
     /**

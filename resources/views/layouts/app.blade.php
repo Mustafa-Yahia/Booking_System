@@ -36,12 +36,10 @@
     </div>
   </header>
 
-  <!-- محتوى الصفحة سيتم إضافته هنا -->
   <main>
     @yield('content')
   </main>
 
-  <!-- تضمين الفوتر من الملف المنفصل -->
   @include('layouts.footer')
 
   <script src="https://kit.fontawesome.com/032d11eac3.js" crossorigin="anonymous"></script>
