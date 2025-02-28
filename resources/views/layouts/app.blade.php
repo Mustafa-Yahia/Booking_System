@@ -14,27 +14,8 @@
 
 <body>
 
-  <!-- Header ثابت -->
-  <header>
-    <div class="content flex_space">
-      <div class="logo">
-        <img src="{{ asset('storage/images/index/logo.png') }}" alt="Logo">
-      </div>
-      <div class="navlinks">
-        <ul id="menulist">
-          <li><a href="#home">home</a> </li>
-          <li><a href="#about">about</a> </li>
-          <li><a href="#rooms">rooms</a> </li>
-          <li><a href="#pages">pages</a> </li>
-          <li><a href="#news">news</a> </li>
-          <li><a href="#contact">contact</a> </li>
-          <li> <i class="fa fa-search"></i> </li>
-          <li> <button class="primary-btn">BOOK NOW</button> </li>
-        </ul>
-        <span class="fa fa-bars" onclick="menutoggle()"></span>
-      </div>
-    </div>
-  </header>
+  @include('layouts.header')
+
 
   <main>
     @yield('content')
