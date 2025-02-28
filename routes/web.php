@@ -1,5 +1,6 @@
 <?php
 
+// use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertyController;
 
@@ -14,9 +15,7 @@ use App\Http\Controllers\PropertyController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+
 
 // Majd
 
@@ -123,10 +122,18 @@ Route::get('/', function () {
 
 
 //Mustafa
-
 Route::get('/', [PropertyController::class, 'index'])->name('home');
+Route::get('/real-state', [PropertyController::class, 'realState'])->name('properties.index'); // صفحة Real State مع الفلترة
 
 
+Route::get('/contact-us', function () {
+    return view('contactus');
+});
+
+
+
+
+// Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 
 
 //Mustafa
