@@ -1,0 +1,45 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.heading {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.filters {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.filters .form-control {
+    width: 200px;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.filters .btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #81c408;
+    color: white;
+    border: none;
+}
+
+.room-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}

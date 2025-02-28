@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'user_id', 'property_id', 'start_date', 'end_date',
@@ -28,5 +29,7 @@ class Booking extends Model
     {
         return $this->hasOne(Payment::class, 'booking_id');
     }
+
+    protected $dates = ['deleted_at'];
 }
 
