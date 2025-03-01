@@ -95,7 +95,6 @@ Route::middleware(['auth', 'role:renter'])->get('/renter', [PropertyController::
 
 // Mohammed
 
-use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\PropertyImageController;
 
 Route::get('/lessor/dashboard', [PropertyController::class, 'dashboard'])->name('lessor.dashboard');

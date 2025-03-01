@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\Property;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 
 class PropertyController extends Controller
@@ -19,11 +20,14 @@ class PropertyController extends Controller
 
     public function index()
     {
+        if(Auth::check()&& Auth::user()->role=="lessor"){
         $properties = Property::all();
         return view('lessor.properties.index', compact('properties'));
+        }
+        $properties = Property::all();
+        return view('index', compact('properties'));
+
     }
-        // $properties = Property::all();
-        // return view('index', compact('properties'));
 
     //}
 
