@@ -65,6 +65,10 @@
                         @endforeach
                     </td>
                     <td>
+                        <a href="{{ route('admin.properties.reviews', $property->id) }}" class="btn btn-info btn-sm">View Reviews</a>
+                    </td>
+
+                    <td>
                         <form action="{{ route('admin.properties.delete', $property->id) }}" method="POST">
                             @csrf
                             @method('DELETE')

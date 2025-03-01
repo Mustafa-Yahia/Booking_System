@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Models\Property;
 use App\Models\Booking;
+use App\Models\Review;
 use App\Models\PropertyImage;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -77,6 +78,7 @@ class AdminController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:6|confirmed',
+            'role' => 'required|in:admin,lessor,renter',
         ]);
 
         $user->update([
@@ -84,6 +86,7 @@ class AdminController extends Controller
             'address' => $request->address,
             'email' => $request->email,
             'password' => $request->password ? bcrypt($request->password) : $user->password,
+            'role' => $request->role,
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
@@ -230,5 +233,22 @@ public function destroy($id)
 
         return view('admin.stats', compact('propertiesCount', 'usersCount', 'bookingsCount', 'totalRevenue'));
     }
+        // ======= Revie =======
+        public function indexRevie($propertyId)
+    {
+        $property = Property::with('reviews.user')->findOrFail($propertyId);
+        $reviews = $property->reviews;
+
+        return view('admin.properties.reviews', compact('property', 'reviews'));
+    }
+
+    public function destroyRevie($id)
+    {
+        $review = Review::findOrFail($id);
+        $review->delete();
+
+        return redirect()->back()->with('success', 'Review deleted successfully.');
+    }
+
 
 }

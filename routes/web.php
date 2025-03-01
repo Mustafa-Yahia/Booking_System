@@ -66,6 +66,8 @@ use App\Http\Controllers\Admin\AdminController;
   Route::get('/properties/create', [AdminController::class, 'createProperty'])->name('properties.create');
   Route::post('/properties', [AdminController::class, 'storeProperty'])->name('properties.store');
   Route::delete('admin/properties/{property}', [AdminController::class, 'destroy'])->name('properties.delete');
+  Route::get('/admin/properties/{property}/reviews', [AdminController::class, 'indexRevie'])->name('properties.reviews');
+Route::delete('/admin/reviews/{review}', [AdminController::class, 'destroyRevie'])->name('reviews.delete');
 
 //   Route::delete('/properties/{property}', [AdminController::class, 'destroyProperty'])->name('properties.delete');
 
