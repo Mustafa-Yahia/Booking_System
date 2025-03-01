@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use DatePeriod;
+use DateTime;
+use DateInterval;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -29,7 +32,7 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         dd($request->all());
-        
+
         $request->validate([
             'checkin' => 'required|date',
             'checkout' => 'required|date',
@@ -69,5 +72,28 @@ class BookingController extends Controller
     public function destroy(Booking $booking)
     {
         //
+    }
+
+    public function getBookedDates($propertyId) {
+        $bookings = Booking::where('property_id', $propertyId)->get(['start_date', 'end_date']);
+         // get all booked dates for the property
+
+        $disabledDates = [];
+
+        foreach($bookings as $booking) {
+            $start = new DateTime($booking->start_date);
+            $end = new DateTime($booking->end_date);
+            // Adjust the end date to include the final day
+            $end->modify('+1 day');
+
+            $range = new DatePeriod($start, new DateInterval('P1D'), $end);
+            // dd($range);
+            foreach($range as $date) {
+                $disabledDates[] = $date->format('Y-m-d');
+            }
+        }
+        // return dd($disabledDates);
+        return response()->json($disabledDates);
+
     }
 }

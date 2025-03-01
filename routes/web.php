@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LessorController;
-use App\Http\Controllers\RenterController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ContactController;
 

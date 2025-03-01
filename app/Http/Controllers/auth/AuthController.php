@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
@@ -31,7 +31,7 @@ class AuthController extends Controller
             } elseif ($user->role === 'lessor') {
                 return redirect()->route('lessor.dashboard')->with('success', 'Welcome Lessor!');
             } else {
-                return redirect()->route('index');
+                return redirect()->route('home');
             }
         }
 

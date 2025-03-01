@@ -2,7 +2,13 @@
 
 @section('title', $property->title)
 <link rel="stylesheet" href="{{asset('css/property-detail.css')}}">
+<script src="{{asset('js/booking.js')}}" defer></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 @section('content')
+
+<p id="property-id" data-id='{{$property->id}}'></p>
 <section class="property-detail">
     <div class="container">
         <!-- Property Images (Grid Layout) -->
@@ -55,10 +61,10 @@
                     <form action="{{route('booking.store')}}" method="POST">
                         @csrf
                         <label for="checkin">Check-in</label>
-                        <input type="date" id="checkin" name="checkin">
+                        <input type="date" id="checkin" name="checkin" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
 
                         <label for="checkout">Check-out</label>
-                        <input type="date" id="checkout" name="checkout">
+                        <input type="date" id="checkout" name="checkout" value="{{ \Carbon\Carbon::now()->addDays(4)->format('Y-m-d') }}">
 
                         <label for="guests">Guests</label>
                         <select id="guests" name="guests">
@@ -77,6 +83,9 @@
             </div>
         </div>
     </div>
+
+
+
 </section>
 
 @endsection

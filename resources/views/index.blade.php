@@ -171,7 +171,9 @@
           <div class="item">
             <div class="card" style="width: 100%; height: 100%; display: flex; flex-direction: column;">
               <div class="image">
-                <img src="{{ asset('storage/images/properties/' . $property->image) }}" class="card-img-top" alt="{{ $property->title }}">
+                @if($property->images->isNotEmpty())
+                <img src="{{ asset('storage/' . $property->images[2]->image_path) }}" class="card-img-top" alt="{{ $property->title }}">
+                @endif
               </div>
               <div class="card-body d-flex flex-column justify-content-between">
                 <h2 class="card-title">{{ $property->title }}</h2>
@@ -182,7 +184,7 @@
                 </div>
                 <p class="card-text" style="flex-grow: 1;">{{ $property->description }}</p>
                 <div class="button d-flex justify-content-between align-items-center">
-                  <a href="#" class="primary-btn btn btn-primary">BOOK NOW</a>
+                  <a href="{{route('properties.show', $property->id)}}" class="primary-btn btn btn-primary">BOOK NOW</a>
                   <h3 class="price">${{ $property->price_per_day }} <span class="text-muted">Per Night</span></h3>
                 </div>
               </div>
