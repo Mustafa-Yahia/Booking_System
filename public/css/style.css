@@ -101,9 +101,7 @@ header ul li a {
   transition: 0.5s;
 }
 
-header ul li a:hover {
-  color: #7fc142;
-}
+
 
 header i {
   margin: 0 20px;

@@ -14,8 +14,8 @@
           <h1>Spend Your Holiday</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           <div class="flex">
-            <button class="primary-btn">READ MORE</button>
-            <button class="secondary-btn">CONTACT US</button>
+            <button class="primary-btn">BooK</button>
+
           </div>
         </div>
       </div>
@@ -25,7 +25,7 @@
           <h1>Explore New Destinations</h1>
           <p>Experience the beauty of the world with our exclusive holiday packages.</p>
           <div class="flex">
-            <button class="secondary-btn">CONTACT US</button>
+            <button class="primary-btn">BooK</button>
           </div>
         </div>
       </div>
@@ -35,8 +35,7 @@
           <h1>Your Dream Vacation Awaits</h1>
           <p>Enjoy unforgettable moments and memories with our customized holiday offers.</p>
           <div class="flex">
-            <button class="primary-btn">READ MORE</button>
-            <button class="secondary-btn">CONTACT US</button>
+            <button class="primary-btn">BooK</button>
           </div>
         </div>
       </div>

@@ -2,6 +2,12 @@
 
 // use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\auth\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LessorController;
+use App\Http\Controllers\RenterController;
+use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,22 +48,12 @@ Route::middleware(['auth', 'role:lessor'])->get('/lessor/dashboard', function ()
     return view('lessor.dashboard');
 })->name('lessor.dashboard');
 
-Route::middleware(['auth', 'role:renter'])->get('/renter', function () {
-    return view('index');
-})->name('index');
-
+Route::middleware(['auth', 'role:renter'])->get('/renter', [PropertyController::class, 'index'])->name('index');
 
 
 
 
 // end_Majd
-
-
-
-
-
-
-
 
 
 
@@ -73,16 +69,7 @@ Route::middleware(['auth', 'role:renter'])->get('/renter', function () {
 
 
 
-
-
-
 //end_Ebrahim
-
-
-
-
-
-
 
 
 
@@ -106,14 +93,6 @@ Route::middleware(['auth', 'role:renter'])->get('/renter', function () {
 
 
 
-
-
-
-
-
-
-
-
 // Mohammed
 
 
@@ -128,29 +107,18 @@ Route::middleware(['auth', 'role:renter'])->get('/renter', function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Mustafa
+// Mustafa
+
 Route::get('/', [PropertyController::class, 'index'])->name('home');
-Route::get('/real-state', [PropertyController::class, 'realState'])->name('properties.index'); // صفحة Real State مع الفلترة
 
 
-Route::get('/contact-us', function () {
-    return view('contactus');
+Route::middleware(['auth'])->group(function () {
+    Route::get('real-state', [PropertyController::class, 'realState'])->name('properties.index'); // صفحة Real State مع الفلترة
+    Route::get('contact-us', function () {
+        return view('contactus');
+    })->name('contact-us');
 });
-
 
 
 
