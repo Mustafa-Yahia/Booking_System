@@ -35,23 +35,18 @@ class PropertyController extends Controller
 
     public function realState(Request $request)
     {
-        // إعداد الاستعلام لجلب جميع العقارات مع إمكانية الفلترة
         $query = Property::query();
 
-        // إذا كان هناك فلترة حسب الاسم
         if ($request->has('name') && $request->input('name') != '') {
             $query->where('title', 'like', '%' . $request->input('name') . '%');
         }
 
-        // إذا كان هناك فلترة حسب السعر
         if ($request->has('price') && $request->input('price') != '') {
             $query->where('price_per_day', '<=', $request->input('price'));
         }
 
-        // جلب العقارات بناءً على الفلاتر المطبقة
         $properties = $query->get();
 
-        // تمرير البيانات إلى الـ View
         return view('renter.real-state', compact('properties'));
     }
 
