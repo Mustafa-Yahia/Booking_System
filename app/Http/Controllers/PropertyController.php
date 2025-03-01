@@ -79,7 +79,7 @@ class PropertyController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('property_images', 'public');
+                $path = $image->store('images/properties', 'public');
                 $property->images()->create(['image_path' => $path]);
             }
         }
