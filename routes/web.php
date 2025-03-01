@@ -8,6 +8,9 @@ use App\Http\Controllers\LessorController;
 use App\Http\Controllers\RenterController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -130,6 +133,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.email');
+
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 // Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 
