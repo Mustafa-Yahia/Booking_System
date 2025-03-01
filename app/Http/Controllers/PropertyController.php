@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Models\Property;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
@@ -39,7 +38,7 @@ class PropertyController extends Controller
         $properties = $query->get();
 
         // تمرير البيانات إلى الـ View
-        return view('real-state', compact('properties'));
+        return view('renter.real-state', compact('properties'));
     }
 
 
