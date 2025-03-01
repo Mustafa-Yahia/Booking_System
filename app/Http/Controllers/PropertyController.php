@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Property;
 use App\Models\PropertyImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
+use App\Models\Property;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class PropertyController extends Controller
@@ -21,6 +22,35 @@ class PropertyController extends Controller
         $properties = Property::all();
         return view('lessor.properties.index', compact('properties'));
     }
+        // $properties = Property::all();
+        // return view('index', compact('properties'));
+
+    //}
+
+
+
+    public function realState(Request $request)
+    {
+        // إعداد الاستعلام لجلب جميع العقارات مع إمكانية الفلترة
+        $query = Property::query();
+
+        // إذا كان هناك فلترة حسب الاسم
+        if ($request->has('name') && $request->input('name') != '') {
+            $query->where('title', 'like', '%' . $request->input('name') . '%');
+        }
+
+        // إذا كان هناك فلترة حسب السعر
+        if ($request->has('price') && $request->input('price') != '') {
+            $query->where('price_per_day', '<=', $request->input('price'));
+        }
+
+        // جلب العقارات بناءً على الفلاتر المطبقة
+        $properties = $query->get();
+
+        // تمرير البيانات إلى الـ View
+        return view('renter.real-state', compact('properties'));
+    }
+
 
     public function create()
     {
@@ -107,4 +137,7 @@ public function edit(Property $property)
         $property->delete();
         return redirect()->route('lessor.properties.index')->with('success', 'Property deleted successfully!');
     }
+
+
+
 }

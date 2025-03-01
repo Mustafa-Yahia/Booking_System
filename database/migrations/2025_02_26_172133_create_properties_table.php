@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('location');
             $table->decimal('price_per_day', 10, 2);
             $table->enum('status', ['available', 'rented'])->default('available');
-             $table->string('type');
-             $table->softDeletes();
+            $table->enum('type',['Villa', 'Apartment', 'House'])->default('Apartment');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
