@@ -3,7 +3,7 @@
 // use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\AuthController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\LessorController;
 use App\Http\Controllers\RenterController;
 use App\Http\Controllers\PropertyController;
@@ -66,10 +66,9 @@ Route::middleware(['auth', 'role:renter'])->get('/renter', [PropertyController::
 
 
 
-use App\Http\Controllers\Admin\AdminController;
-// Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
- Route::prefix('admin')->name('admin.')->group(function () {
+//  Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/users', [AdminController::class, 'indexUsers'])->name('users.index');
 
     Route::get('/users/create', [AdminController::class, 'createUser'])->name('users.create');

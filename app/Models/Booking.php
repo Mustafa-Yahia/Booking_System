@@ -12,7 +12,7 @@ class Booking extends Model
 
     protected $fillable = [
         'user_id', 'property_id', 'start_date', 'end_date',
-        'total_price', 'status'
+        'total', 'status'
     ];
 
     public function user()
