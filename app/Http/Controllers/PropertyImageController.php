@@ -2,64 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Property;
 use App\Models\PropertyImage;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PropertyImageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function destroy(Property $property, PropertyImage $image)
     {
-        //
-    }
+        if ($image->property_id !== $property->id) {
+            return back()->with('error', 'Invalid image for this property');
+        }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        // حذف الصورة من التخزين
+        Storage::disk('public')->delete($image->image_path);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // حذف السجل من قاعدة البيانات
+        $image->delete();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(PropertyImage $propertyImage)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PropertyImage $propertyImage)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, PropertyImage $propertyImage)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(PropertyImage $propertyImage)
-    {
-        //
+        return back()->with('success', 'Image deleted successfully!');
     }
 }
