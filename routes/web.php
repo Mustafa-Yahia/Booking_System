@@ -8,6 +8,11 @@ use App\Http\Controllers\LessorController;
 use App\Http\Controllers\RenterController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\FilterController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -161,11 +166,35 @@ Route::get('/', [PropertyController::class, 'index'])->name('home');
 Route::middleware(['auth'])->group(function () {
     Route::get('real-state', [PropertyController::class, 'realState'])->name('properties.index'); // صفحة Real State مع الفلترة
     Route::get('contact-us', function () {
-        return view('contactus');
+        return view('renter.contactus');
     })->name('contact-us');
 });
 
 
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.email');
+
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+
+
+
+// notofication
+
+Route::middleware('auth')->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::post('/notifications', [NotificationController::class, 'store']);
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+    Route::delete('/notifications/{id}', [NotificationController::class, 'destroy']);
+});
+
+
+Route::get('/notifications', [NotificationController::class, 'fetchNotifications'])->name('notifications.fetch');
+Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+
+// Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('properties.filter');
+// Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('filterProperties');
 
 // Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 

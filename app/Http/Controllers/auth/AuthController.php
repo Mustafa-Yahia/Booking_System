@@ -21,7 +21,7 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        $remember = $request->has('remember');
+        $remember = $request->has('remember');  // تأكد من أن هذا السطر يقوم بتحديد ما إذا كانت خانة "تذكرني" محددة.
 
         if (Auth::attempt($credentials, $remember)) {
             $user = Auth::user();

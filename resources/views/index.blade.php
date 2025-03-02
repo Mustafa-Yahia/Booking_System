@@ -1,5 +1,8 @@
 
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
 @extends('layouts.app')
+
 
 @section('title', 'Crowny Hotel')
 
@@ -77,11 +80,9 @@
     <div class="container flex">
       <div class="left">
         <div class="heading">
-          <h1>WELCOME</h1>
           <h2>Modern Apartments in Jordan</h2>
         </div>
         <p>Discover our luxurious and fully-equipped apartments in the heart of Jordan. Whether you're looking for a short-term stay or a long-term residence, our apartments offer comfort, convenience, and privacy. Enjoy spacious living areas, modern amenities, and breathtaking views. With various locations across the country, we provide the perfect home away from home for you.</p>
-        <button class="primary-btn" id="learnMoreBtn">LEARN MORE</button>
       </div>
       <div class="right">
         <img src="{{ asset('storage/images/index/about.png') }}" alt="About Image">
@@ -89,40 +90,7 @@
     </div>
   </section>
 
-  <!-- Modal (Popup) -->
-  <div id="learnMoreModal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn">&times;</span>
-      <h2>More About Our Apartments</h2>
-      <p>Our apartments are fully equipped with all the necessary amenities for a comfortable stay. They are located in prime locations in Jordan, with easy access to restaurants, shopping malls,
-        and tourist attractions. Each apartment offers a spacious living area, modern kitchen, high-speed internet, and more. Whether you're staying for a few days or months, we ensure that your
-        experience will be unforgettable.</p>
-    </div>
-  </div>
 
-  <script>
-    // Get the modal and button
-    var modal = document.getElementById("learnMoreModal");
-    var btn = document.getElementById("learnMoreBtn");
-    var span = document.getElementsByClassName("close-btn")[0];
-
-    // When the user clicks the button, open the modal
-    btn.onclick = function() {
-      modal.style.display = "block";
-    }
-
-    // When the user clicks the close button, close the modal
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
-  </script>
 {{-- ===================== End Modal (Popup)  ========================= --}}
 
 
@@ -156,60 +124,69 @@
 
 
 {{-- ===================== Start ٍsection Room ========================= --}}
-
 <section class="rooms">
     <div class="container top">
-      <div class="heading">
-        <h1>EXPLORE</h1>
-        <h2>Our Rooms</h2>
-        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
-      </div>
-
-      <div class="content mtop">
-        <div class="owl-carousel owl-carousel1 owl-theme">
-          @foreach($properties as $property)
-          <div class="item">
-            <div class="card" style="width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <div class="image">
-                @if($property->images->isNotEmpty())
-                <img src="{{ asset('storage/' . $property->images->first()->image_path) }}" class="card-img-top" alt="{{ $property->title }}">
-                @endif
-              </div>
-              <div class="card-body d-flex flex-column justify-content-between">
-                <h2 class="card-title">{{ $property->title }}</h2>
-                <div class="rate d-flex">
-                  @for ($i = 0; $i < 5; $i++)
-                    <i class="fa fa-star"></i>
-                  @endfor
-                </div>
-                <p class="card-text" style="flex-grow: 1;">{{ $property->description }}</p>
-                <div class="button d-flex justify-content-between align-items-center">
-                  <a href="#" class="primary-btn btn btn-primary">BOOK NOW</a>
-                  <h3 class="price">${{ $property->price_per_day }} <span class="text-muted">Per Night</span></h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          @endforeach
+        <div class="heading text-center">
+            <h2>Real State Category</h2>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
         </div>
-      </div>
-    </div>
-  </section>
 
-<script>
-  $('.owl-carousel1').owlCarousel({
-    loop: true,
-    margin: 40,
-    nav: true,
-    dots: false,
-    navText: ["<i class = 'fa fa-chevron-left'></i>", "<i class = 'fa fa-chevron-right'></i>"],
-    responsive: {
-      0: { items: 1 },
-      768: { items: 2, margin: 10 },
-      1000: { items: 3 }
-    }
-  });
-</script>
+        <div class="content mtop">
+            <div class="owl-carousel owl-carousel1 owl-theme d-flex flex-wrap justify-content-center gap-3">
+                @foreach($properties as $property)
+                <div class="item gap-5">
+                    <a href="" class="text-decoration-none text-dark">
+                        <div class="card shadow-sm border-3 rounded-3" style="width: 300px; height: 400px; display: flex; flex-direction: column; cursor: pointer;">
+                            <!-- Image-->
+                            <div class="image" style="width: 100%; height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                <img src="{{ asset('storage/' . $property->images->first()->image_path) }}"
+                                     class="card-img-top rounded-top"
+                                     alt="{{ $property->title }}"
+                                     style="max-width: 100%; max-height: 100%; object-fit: fill;">
+                            </div>
+
+
+                            <!-- card Contant-->
+                            <div class="card-body d-flex flex-column justify-content-between p-3">
+                                <h5 class="card-title fw-bold  text-center" style="color: #000;">{{ $property->title }}</h5>
+
+                                <!--.....-->
+                                <div class="mb-2">
+                                    <p class="mb-1"><i class="fa fa-map-marker-alt" style="color: #000"></i> <span class="fw-bold">Location:</span> {{ $property->location }}</p>
+                                    <p class="mb-1"><i class="fa fa-home" style="color:#000"></i> <span class="fw-bold">Type:</span> {{ $property->type }}</p>
+                                    <p class="mb-1">
+                                        <i class="fa fa-info-circle"></i> <span class="fw-bold">Status:</span>
+                                        <span class="badge {{ strtolower($property->status) == 'available' ? 'bg-success' : 'bg-danger' }}">
+                                            {{ ucfirst($property->status) }}
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <!-- التقييم -->
+                                <div class="rate d-flex mb-2">
+                                    @for ($i = 0; $i < 5; $i++)
+                                        <i class="fa fa-star text-warning"></i>
+                                    @endfor
+                                </div>
+
+                                <!-- السعر و الزر -->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h6 class="price text-dark fw-bold mb-0">${{ $property->price_per_day }} <span class="text-muted">/ Night</span></h6>
+                                    {{-- <a href="{{ route('book.show', $property->id) }}" class="btn" style="background-color: #7fc142; color: white;">Book Now</a> --}}
+                                    <a href="" class="btn" style="background-color: #7fc142; color: white;">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
 {{-- ===================== End section Room ========================= --}}
 
     @endsection

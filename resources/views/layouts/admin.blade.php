@@ -58,8 +58,12 @@
         <br>
         <br>
         <br><br><br><br><br><br><br><br>
-      <a style="background-color: #5a6570" href="{{ route('login') }}" class="primary-btn">Login</a>
-    </div>
+        <a  href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+
+        </form>    </div>
 
     <!-- Content -->
     <div class="content">
