@@ -35,31 +35,29 @@
 
                 <div class="details">
                     <p><strong>Status:</strong> {{ ucfirst($property->status) }}</p>
-                    <p><strong>Price per night:</strong> ${{ number_format($property->price_per_day, 2) }}</p>
+                    <p><strong>Price per night:</strong> {{ number_format($property->price_per_day, 2) }} JOD</p>
                     <br>
                     <h2>About this property</h2>
                     <p class="description">{{ $property->description }}</p>
                 </div>
 
                 <div class="owner-details">
-
-                        <div>
-                            <p><strong>Keep in touch with {{ $property->owner->name }}</strong></p>
-
-                        </div>
-                        <div class="small">
-                            <p>{{ $property->owner->email }} | {{ $property->owner->phone }}</p>
-                        </div>
-
+                    <div>
+                        <p><strong>Keep in touch with {{ $property->owner->name }}</strong></p>
+                    </div>
+                    <div class="small">
+                        <p>{{ $property->owner->email }} | {{ $property->owner->phone }}</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Booking Section -->
             <div class="right-column">
                 <div class="booking-box">
-                    <h2>${{ number_format($property->price_per_day, 2) }} <span> / night</span></h2>
-                    <form action="{{route('booking.store')}}" method="POST">
+                    <h2>{{ number_format($property->price_per_day, 2) }} JOD <span> / night</span></h2>
+                    <form action="{{route('booking.store')}}" method="POST" onsubmit="return checkAvailability(event)">
                         @csrf
+                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                         <label for="checkin">Check-in</label>
                         <input type="date" id="checkin" name="checkin" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
 
@@ -73,18 +71,57 @@
                             <option value="3">3 Guests</option>
                             <option value="4">4 Guests</option>
                         </select>
-                        <input type="hidden" name="property_id" id="" value="{{$property->id}}">
-                        <input type="hidden" name="owner" id="" value="{{$property->owner->id}}">
-                        <input type="hidden" name="price" id="" value="{{$property->price_per_day}}">
+                        <input type="hidden" name="property_id" value="{{$property->id}}">
+                        <input type="hidden" name="owner" value="{{$property->owner->id}}">
+                        <input type="hidden" name="price" value="{{$property->price_per_day}}">
 
-                        <button type="submit" class="primary-btn">Book Now</button>
+                        <button type="submit" class="primary-btn">Check availability</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
+    {{-- displays reviews --}}
+    <div class="reviews-section">
+        <div class="reviews">
+            @foreach ($reviews as $review)
+            <div class="card">
+                <div class="user">
+                    <p>{{ucfirst($review->user->name)}}</p>
+                    @for ($i = 0; $i < $review->rating; $i++)
+                    <span><i class='bx bxs-star bx-review'></i></span>
+                    @endfor
+                    <small>{{$review->created_at->format('Y-m-d')}}</small>
+                </div>
+                <div class="review-body">
+                    <p>{{$review->comment}}</p>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
 
+    {{-- add a review only for renters --}}
+    @if(Auth::user()->role == 'renter')
+    <form action="{{route('reviews.store')}}" method="POST" class="review-form" onsubmit="return validateForm()">
+        @csrf
+        <div class="rating">
+            <span onclick="rate(1)"><i class='bx bx-star bx-md'></i></span>
+            <span onclick="rate(2)"><i class='bx bx-star bx-md'></i></span>
+            <span onclick="rate(3)"><i class='bx bx-star bx-md'></i></span>
+            <span onclick="rate(4)"><i class='bx bx-star bx-md'></i></span>
+            <span onclick="rate(5)"><i class='bx bx-star bx-md'></i></span>
+        </div>
+        <p class="error" id="rating-err"></p>
+        <input type="hidden" name="stars" id="stars" value="0">
+        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+        <input type="hidden" name="property_id" value="{{$property->id}}">
+        <textarea name="review" id="review" placeholder="Your review" cols="50" rows="5" class="review-textarea"></textarea>
+        <p class="error" id="review-err"></p>
+        <button type="submit" class="primary-btn">Add a Review</button>
+    </form>
+    @endif
 
 </section>
 

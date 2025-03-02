@@ -9,6 +9,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LessorController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +90,12 @@ Route::resource('properties', PropertyController::class);
 
 Route::Resource('booking', BookingController::class);
 
+Route::resource('reviews', ReviewController::class);
+
+Route::resource('profile', UserController::class);
+Route::get('profile', [UserController::class, 'profile'])->name('profile');
+Route::get('/profile/edit/{id}/{ref?}', [UserController::class, 'edit'])->name('profile.edit');
+
 
 
 
@@ -123,7 +131,7 @@ Route::delete('/lessor/properties/{property}/images/{image}', [PropertyImageCont
 //Mustafa
 // Mustafa
 
-Route::get('/', [PropertyController::class, 'index'])->name('home');
+Route::get('/', [PropertyController::class, 'index'])->name('index');
 
 
 Route::middleware(['auth'])->group(function () {

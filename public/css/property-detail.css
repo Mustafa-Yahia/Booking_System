@@ -3,7 +3,7 @@
     font-family: Arial, sans-serif;
 }
 .container {
-    width: 85%;
+    width: 100%;
     margin: auto;
 }
 
@@ -168,4 +168,63 @@ input[type="date"]:focus {
     border-color: #000;
 }
 
+
+/* start of reviews */
+
+.reviews-section {
+    width: 60%;
+    /* border: solid; */
+    padding: 1vh 2vh;
+    position: relative;
+    left: 7%;
+}
+
+.reviews {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+}
+
+
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vh;
+    max-width: fit-content;
+    /* border: solid rebeccapurple; */
+    margin: 2vh 0;
+    gap: 3vh;
+}
+
+
+
+.review-form {
+    margin: 3vh;
+    position: relative;
+    left: 15%;
+    display:  flex;
+    flex-direction: column;
+    max-width: fit-content;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.review-form > textarea, .review-form > button {
+    max-width: fit-content;
+    margin: 3vh 0;
+
+}
+
+.review-form > button {
+    display: inline-block;
+    margin: auto;
+}
+
+.error {
+    color: red;
+    font-size: 1rem;
+    margin-right: auto;
+}
+ /* end of reviews */
 

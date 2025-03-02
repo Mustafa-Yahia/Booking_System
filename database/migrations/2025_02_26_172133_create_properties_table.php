@@ -14,13 +14,13 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->on('properties')->onDelete('cascade'); // user_id is the lessor
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // user_id is the lessor
             $table->string('title');
             $table->text('description');
             $table->string('location');
             $table->decimal('price_per_day', 10, 2);
             $table->enum('status', ['available', 'rented'])->default('available');
-            $table->enum('type',['Villa', 'Apartment', 'House'])->default('Apartment');
+            $table->enum('type',['Villa', 'Apartment', 'House' , 'studio', 'other'])->default('Apartment');
             $table->softDeletes();
             $table->timestamps();
         });

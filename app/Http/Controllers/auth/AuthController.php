@@ -31,7 +31,7 @@ class AuthController extends Controller
             } elseif ($user->role === 'lessor') {
                 return redirect()->route('lessor.dashboard')->with('success', 'Welcome Lessor!');
             } else {
-                return redirect()->route('home');
+                return redirect()->route('index');
             }
         }
 
@@ -71,6 +71,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login')->with('success', 'Logout successfully!');
+        return redirect()->route('index')->with('success', 'Logout successfully!');
     }
 }

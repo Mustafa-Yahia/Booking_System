@@ -31,14 +31,31 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
 
+        $datetime1 = new DateTime($request->checkin);
+        $datetime2 = new DateTime($request->checkout);
+        $days = $datetime1->diff($datetime2)->format('%a');
+
+        // dd($days * $request->price );
         $request->validate([
             'checkin' => 'required|date',
             'checkout' => 'required|date',
             'guests' => 'required|numeric',
             'property_id' => 'required|exists:properties,id'
         ]);
+
+        Booking::create([
+            'user_id' => $request->user_id,
+            'property_id' => $request->property_id,
+            'start_date' => $request->checkin,
+            'end_date' => $request->checkout,
+            'status' => 'pending',
+            'total' => $request->price * ($days + 1),
+
+        ]);
+
+        return "done";
 
     }
 

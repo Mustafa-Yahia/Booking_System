@@ -88,7 +88,7 @@
                             <div class="mb-3">
                                 <label class="form-check-label">Amenities</label><br>
                                 <!-- Amenities checkboxes -->
-                               
+
 
                             </div>
 
@@ -107,7 +107,9 @@
                             <div class="card" style="width: 100%; height: 100%; display: flex; flex-direction: column;">
                                 <!-- Property image -->
                                 <div class="image">
-                                    <img src="{{ asset('storage/images/properties/' . $property->image) }}" class="card-img-top" alt="{{ $property->title }}" style="object-fit: cover; height: 250px;">
+                                    @if($property->images->isNotEmpty())
+                                    <img src="{{ asset('storage/' . $property->images->first()->image_path) }}" class="card-img-top" alt="{{ $property->title }}" style="object-fit: cover; height: 250px;">
+                                    @endif
                                 </div>
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <!-- Property title -->
@@ -126,13 +128,13 @@
                                     <!-- Price and booking button -->
                                     <div class="button d-flex justify-content-between align-items-center">
                                         <!-- Book Now button -->
-                                        <a href="#" class="primary-btn btn primary-btn" style="font-size: 0.875rem; padding: 0.5rem 1rem; width: 45%; background-color: #81c408; border-color: #81c408; transition: background-color 0.3s, border-color 0.3s;">
-                                            BOOK NOW
+                                        <a href="{{route('properties.show', $property->id)}}" class="primary-btn btn primary-btn" style="font-size: 0.875rem; padding: 0.5rem 0.3rem; width: 50%; background-color: #81c408; border-color: #81c408; transition: background-color 0.3s, border-color 0.3s;">
+                                            View Details
                                         </a>
 
                                         <!-- Price per night -->
                                         <h3 class="price" style="font-size: 1rem; font-weight: bold; margin: 0; display: flex; align-items: center; white-space: nowrap;">
-                                            ${{ $property->price_per_day }}
+                                            {{ $property->price_per_day }} JOD
                                             <span class="text-muted" style="font-size: 0.875rem; margin-left: 5px;">Per Night</span>
                                         </h3>
                                     </div>

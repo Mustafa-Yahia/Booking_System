@@ -5,6 +5,7 @@ use App\Models\PropertyImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+use App\Models\Review;
 use App\Models\Property;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
@@ -93,9 +94,10 @@ class PropertyController extends Controller
         $property->load('images');
         return view('lessor.properties.show', compact('property'));
     }
-    $images = Property::find($property)->images;
-    $property = Property::find($property);
-    return view('properties.show', compact('property', 'images'));
+    $reviews = Review::where('property_id', $property->id)->get();
+    $images = Property::find($property->id)->images;
+    $property = Property::find($property->id);
+    return view('properties.show', compact('property', 'images', 'reviews'));
 }
 
 
@@ -142,7 +144,5 @@ public function edit(Property $property)
         $property->delete();
         return redirect()->route('lessor.properties.index')->with('success', 'Property deleted successfully!');
     }
-
-
 
 }
