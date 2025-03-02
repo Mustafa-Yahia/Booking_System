@@ -19,5 +19,10 @@ class Payment extends Model
         return $this->belongsTo(Booking::class, 'booking_id');
     }
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     protected $dates = ['deleted_at'];
 }

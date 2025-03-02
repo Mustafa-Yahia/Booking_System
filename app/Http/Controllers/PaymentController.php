@@ -2,64 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Payment;  
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
-        //
+        $user = Auth::user(); 
+        $cartItems = Payment::with(['booking.property', 'user'])
+        ->where('user_id', auth()->id())  
+        ->get();
+    
+        $totalPrice = $cartItems->sum('amount');
+
+        return view('payment.paymentt', compact('cartItems', 'totalPrice', 'user'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    
+    public function remove($id)
     {
-        //
-    }
+        $cartItem = Payment::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
 
-    /**
-     * Store a newly created resource in storage.
-     */
+        $cartItem->delete();
+
+        return redirect()->route('payment.index')->with('success', 'Payment was successfully deleted.');    }
+
+   
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'booking_id'     => 'required|exists:bookings,id',
+            'amount'         => 'required|numeric|min:1',
+            'payment_method' => 'required|string|max:50',
+            'status'         => 'required|in:pending,completed,failed',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Payment $payment)
-    {
-        //
-    }
+        Payment::create([
+            'user_id'        => Auth::id(),
+            'booking_id'     => $request->booking_id,
+            'amount'         => $request->amount,
+            'payment_method' => $request->payment_method,
+            'status'         => $request->status,
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Payment $payment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Payment $payment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Payment $payment)
-    {
-        //
-    }
+        return redirect()->route('Payment.index')->with('success', 'The active payment has been added.');    }
 }
