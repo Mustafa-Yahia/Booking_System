@@ -1,43 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Defining character encoding and viewport for responsive design -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Rooms</title>
+@extends('layouts.app')
 
-    <!-- Loading Bootstrap CSS from CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('title', 'Our Rooms')
 
-    <!-- Including custom CSS files for the site -->
-    <link rel="stylesheet" href="{{ asset('css/real-state.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
-    <!-- Adding Font Awesome library for icons -->
-    <script src="https://kit.fontawesome.com/032d11eac3.js" crossorigin="anonymous"></script>
-</head>
-
-<!-- Custom CSS for button styling -->
-<style>
-    /* Change button color when clicked */
-    .primary-btn:active, .primary-btn:focus {
-        background-color: #81c408;
-        border-color: #81c408;
-        box-shadow: 0 0 0 0.2rem rgba(129, 196, 8, 0.5); /* Add shadow effect */
-    }
-
-    /* Change button color when hovered */
-    .primary-btn:hover {
-        background-color: #66a305; /* Darker green on hover */
-        border-color: #66a305;
-    }
-</style>
-
-<body>
-
-    <!-- Include header from layout -->
-    @include('layouts.header')
-
+@section('content')
     <section class="real-state">
         <div class="container top">
             <!-- Heading and description for the content -->
@@ -53,7 +18,6 @@
                         <h4 class="mb-4">Filters</h4>
                         <!-- Filter form -->
                         <form action="{{ route('properties.index') }}" method="GET">
-
                             <!-- Search by name -->
                             <div class="mb-3">
                                 <input type="text" name="name" class="form-control" placeholder="Search by name" value="{{ request('name') }}">
@@ -104,21 +68,22 @@
                         <!-- Loop through each property and display details -->
                         @foreach($properties as $property)
                         <div class="col-md-4 mb-4">
-                            <div class="card" style="width: 100%; height: 100%; display: flex; flex-direction: column;">
+                            <div class="card shadow-sm border-0 rounded-3" style="width: 100%; height: 100%; display: flex; flex-direction: column; cursor: pointer;">
                                 <!-- Property image -->
                                 <div class="image">
                                     @if($property->images->isNotEmpty())
                                     <img src="{{ asset('storage/' . $property->images->first()->image_path) }}" class="card-img-top" alt="{{ $property->title }}" style="object-fit: cover; height: 250px;">
                                     @endif
                                 </div>
-                                <div class="card-body d-flex flex-column justify-content-between">
+
+                                <div class="card-body d-flex flex-column justify-content-between p-3">
                                     <!-- Property title -->
-                                    <h2 class="card-title" style="font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem;">{{ $property->title }}</h2>
+                                    <h5 class="card-title text-primary fw-bold text-center" style="font-size: 1.25rem;">{{ $property->title }}</h5>
 
                                     <!-- Property rating -->
                                     <div class="rate d-flex mb-2">
                                         @for ($i = 0; $i < 5; $i++)
-                                            <i class="fa fa-star" style="color: #ff9800; font-size: 1rem;"></i>
+                                            <i class="fa fa-star text-warning"></i>
                                         @endfor
                                     </div>
 
@@ -126,7 +91,7 @@
                                     <p class="card-text" style="font-size: 0.875rem; color: #555; flex-grow: 1; margin-bottom: 1rem;">{{ $property->description }}</p>
 
                                     <!-- Price and booking button -->
-                                    <div class="button d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-between align-items-center">
                                         <!-- Book Now button -->
                                         <a href="{{route('properties.show', $property->id)}}" class="primary-btn btn primary-btn" style="font-size: 0.875rem; padding: 0.5rem 0.3rem; width: 50%; background-color: #81c408; border-color: #81c408; transition: background-color 0.3s, border-color 0.3s;">
                                             View Details
@@ -148,8 +113,14 @@
             </div>
         </div>
     </section>
+@endsection
 
-    <!-- Loading Bootstrap JS from CDN -->
+@section('styles')
+    <!-- You can include custom styles specific to this page -->
+    <link rel="stylesheet" href="{{ asset('css/real-state.css') }}">
+@endsection
+
+@section('scripts')
+    <!-- You can add custom scripts for this page -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Notification;
+
 
 class Booking extends Model
 {
@@ -31,5 +33,22 @@ class Booking extends Model
     }
 
     protected $dates = ['deleted_at'];
+
+
+
+    // ------------------------------------
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($booking) {
+            Notification::create([
+                'user_id' => $booking->user_id,
+                'title'   => 'New Booking!',
+                'message' => "Your booking for property ID {$booking->property_id} has been confirmed.",
+            ]);
+        });
+    }
+    // ----------------------------------------
 }
 

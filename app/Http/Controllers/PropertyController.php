@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 
 class PropertyController extends Controller
 {
+
+    
     public function dashboard()
     {
         $properties = Property::all();

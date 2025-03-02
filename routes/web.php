@@ -5,10 +5,15 @@ use App\Http\Controllers\RenterController;
 // use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\AuthController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\LessorController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\FilterController;
+
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 
@@ -64,6 +69,42 @@ Route::middleware(['auth', 'role:renter'])->get('/renter', [PropertyController::
 
 
 
+
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+
+//  Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/users', [AdminController::class, 'indexUsers'])->name('users.index');
+
+    Route::get('/users/create', [AdminController::class, 'createUser'])->name('users.create');
+
+    Route::post('/users', [AdminController::class, 'storeUser'])->name('users.store');
+
+    Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('users.edit');
+
+    Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
+
+    Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->name('users.delete');
+  // ======= Properties =======
+  Route::get('/properties', [AdminController::class, 'indexProperties'])->name('properties.index');
+  Route::get('/properties/create', [AdminController::class, 'createProperty'])->name('properties.create');
+  Route::post('/properties', [AdminController::class, 'storeProperty'])->name('properties.store');
+  Route::delete('admin/properties/{property}', [AdminController::class, 'destroy'])->name('properties.delete');
+  Route::get('/admin/properties/{property}/reviews', [AdminController::class, 'indexRevie'])->name('properties.reviews');
+Route::delete('/admin/reviews/{review}', [AdminController::class, 'destroyRevie'])->name('reviews.delete');
+
+//   Route::delete('/properties/{property}', [AdminController::class, 'destroyProperty'])->name('properties.delete');
+
+  // ======= Bookings =======
+  Route::get('/bookings', [AdminController::class, 'indexBookings'])->name('bookings.index');
+  Route::get('/bookings/{booking}', [AdminController::class, 'showBooking'])->name('bookings.show');
+  Route::delete('/bookings/{id}', [AdminController::class, 'destroyBooking'])->name('bookings.destroy');
+
+  Route::get('/admin/bookings/{booking:name}/edit', [AdminController::class, 'editBooking'])->name('bookings.edit');
+  Route::put('/admin/bookings/{booking:name}', [AdminController::class, 'updateBooking'])->name('bookings.update');
+  // ======= Stats =======
+  Route::get('/stats', [AdminController::class, 'showStats'])->name('stats');
+});
 
 
 
@@ -137,11 +178,35 @@ Route::get('/', [PropertyController::class, 'index'])->name('index');
 Route::middleware(['auth'])->group(function () {
     Route::get('real-state', [PropertyController::class, 'realState'])->name('properties.index'); // صفحة Real State مع الفلترة
     Route::get('contact-us', function () {
-        return view('contactus');
+        return view('renter.contactus');
     })->name('contact-us');
 });
 
 
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.email');
+
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+
+
+
+// notofication
+
+Route::middleware('auth')->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::post('/notifications', [NotificationController::class, 'store']);
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+    Route::delete('/notifications/{id}', [NotificationController::class, 'destroy']);
+});
+
+
+Route::get('/notifications', [NotificationController::class, 'fetchNotifications'])->name('notifications.fetch');
+Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+
+// Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('properties.filter');
+// Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('filterProperties');
 
 // Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 
