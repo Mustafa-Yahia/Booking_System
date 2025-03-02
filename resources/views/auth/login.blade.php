@@ -128,8 +128,6 @@
 <body>
 
 
-
-
     <div class="login-container">
         <form method="POST" action="{{ route('login') }}">
             @csrf
