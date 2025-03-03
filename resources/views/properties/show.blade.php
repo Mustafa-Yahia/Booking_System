@@ -9,6 +9,7 @@
 @section('content')
 
 <p id="property-id" data-id='{{$property->id}}'></p>
+<p id="price" data-id='{{$property->price_per_day}}'></p>
 <section class="property-detail">
     <div class="container">
         <!-- Property Images (Grid Layout) -->
@@ -55,9 +56,9 @@
             <div class="right-column">
                 <div class="booking-box">
                     <h2>{{ number_format($property->price_per_day, 2) }} JOD <span> / night</span></h2>
-                    <form action="{{route('booking.store')}}" method="POST" onsubmit="return checkAvailability(event)">
+                    <form action="{{route('payment.index')}}" method="GET" onsubmit="return checkAvailability(event)">
                         @csrf
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}" id="user_id">
                         <label for="checkin">Check-in</label>
                         <input type="date" id="checkin" name="checkin" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
 
@@ -88,7 +89,9 @@
             @foreach ($reviews as $review)
             <div class="card">
                 <div class="user">
-                    <p>{{ucfirst($review->user->name)}}</p>
+                    <img src="{{asset('storage/' . $review->user->image)}}" alt="" class="profile-pic">
+                    <span>{{ucfirst($review->user->name)}}</span>
+                    <br>
                     @for ($i = 0; $i < $review->rating; $i++)
                     <span><i class='bx bxs-star bx-review'></i></span>
                     @endfor

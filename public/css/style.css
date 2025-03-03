@@ -76,70 +76,81 @@ button {
 }
 
 /*--------header---------*/
-/* تنسيق الـ Navbar */
-
-/* Style for the notification badge */
-
-
-.navbar {
-    background-color: #ffffff;
-    padding: 10px 50px;
+header {
+  height: 10vh;
+  line-height: 10vh;
+  padding: 0 20px;
 }
 
-.navbar-brand img {
-    max-width: 150px;
+header img {
+  margin: 20px 0;
 }
 
-.navbar-nav .nav-link {
-    font-weight: bold;
-    margin-right: 15px;
+header ul {
+  display: inline-block;
 }
 
-.navbar-nav .nav-link:hover {
-    color: #81c408;
+header ul li {
+  display: inline-block;
+  text-transform: uppercase;
 }
 
-.nav-item .btn {
-    margin-left: 10px;
-    border-radius: 5px;
+header ul li a {
+  color: #000;
+  margin: 0 10px;
+  transition: 0.5s;
 }
 
-.navbar-toggler {
-    border-color: #81c408;
+
+
+header i {
+  margin: 0 20px;
 }
 
-.navbar-toggler-icon {
-    background-color: #81c408;
+header button {
+  padding: 13px 40px;
 }
 
-.dropdown-menu {
-    min-width: 200px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+header .navlinks span {
+  display: none;
 }
 
-.dropdown-item {
-    font-size: 14px;
-    padding: 10px 15px;
-}
+@media only screen and (max-width:768px) {
+  header ul {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #009f7f;
+    overflow: hidden;
+    transition: max-height 0.5s;
+    text-align: center;
+    z-index: 9;
+  }
 
-.dropdown-item:hover {
-    background-color: #81c408;
+  header ul li {
+    display: block;
+  }
+
+  header ul li a {
     color: white;
+  }
+
+  header i {
+    color: white;
+  }
+
+  header .navlinks span {
+    color: black;
+    display: block;
+    cursor: pointer;
+    line-height: 10vh;
+    font-size: 25px;
+  }
 }
 
 /*--------header---------*/
-/* Custom style for Logout button */
-.btn-logout {
-    background-color: #81c408; /* Green color */
-    border-color: #81c408; /* Green color for the border */
-    color: white; /* White text color */
-}
-
-.btn-logout:hover {
-    background-color: #6a9a06; /* Darker green for hover effect */
-    border-color: #6a9a06; /* Darker green for the border on hover */
-}
 
 
 /* Modal styles */
@@ -413,7 +424,31 @@ h1 {
   padding: 30px;
 }
 
+.rooms i {
+  font-size: 12px;
+  color: #fbb234;
+  margin: 15px 0;
+  margin-right: 5px;
+}
 
+.rooms p {
+  margin: 4px 0;
+  opacity: 0.7;
+}
+
+.rooms h3 {
+  font-size: 30px;
+  line-height: 20px;
+  margin-left: 20px;
+  font-weight: 500;
+  color: #7fc142;
+}
+
+.rooms h3 span {
+  font-size: 15px;
+  font-weight: 400;
+  color: #000;
+}
 
 .owl-carousel1 .owl-nav .owl-prev,
 .owl-carousel1 .owl-nav .owl-next {

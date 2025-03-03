@@ -173,10 +173,10 @@ input[type="date"]:focus {
 
 .reviews-section {
     width: 60%;
-    /* border: solid; */
     padding: 1vh 2vh;
     position: relative;
     left: 7%;
+    z-index: 2; /* Ensure the reviews section has a higher z-index */
 }
 
 .reviews {
@@ -191,9 +191,9 @@ input[type="date"]:focus {
     flex-direction: column;
     padding: 1.5vh;
     max-width: fit-content;
-    /* border: solid rebeccapurple; */
     margin: 2vh 0;
     gap: 3vh;
+    z-index: 2; /* Ensure the cards have a higher z-index */
 }
 
 

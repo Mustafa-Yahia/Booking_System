@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\User;
+use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function profile() {
-        return view('user.profile', ['user' => Auth::user()]);
+        $bookings = Booking::where('user_id', Auth::user()->id)->get();
+
+
+        return view('user.profile', compact('bookings'));
     }
 
     public function index() {

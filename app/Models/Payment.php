@@ -11,12 +11,16 @@ class Payment extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'booking_id', 'amount', 'status', 'payment_method'
+        'user_id', 'booking_id', 'amount', 'status', 'payment_method'
     ];
 
     public function booking()
     {
         return $this->belongsTo(Booking::class, 'booking_id');
+    }
+
+    public function user() {
+        return $this->hasOne(User::class);
     }
 
     protected $dates = ['deleted_at'];

@@ -57,7 +57,7 @@
                             </div>
 
                             <!-- Apply Filters button -->
-                            <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                            <button type="submit" class="btn  w-100" style="background-color: #7fc142; color: #fff" >Apply Filters</button>
                         </form>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
 
                                 <div class="card-body d-flex flex-column justify-content-between p-3">
                                     <!-- Property title -->
-                                    <h5 class="card-title text-primary fw-bold text-center" style="font-size: 1.25rem;">{{ $property->title }}</h5>
+                                    <h5 class="card-title  fw-bold text-center" style="font-size: 1.25rem;">{{ $property->title }}</h5>
 
                                     <!-- Property rating -->
                                     <div class="rate d-flex mb-2">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Payment;
 use DatePeriod;
 use DateTime;
 use DateInterval;
@@ -23,7 +24,7 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->route('booking.store');
     }
 
     /**
@@ -31,31 +32,48 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
 
-        $datetime1 = new DateTime($request->checkin);
-        $datetime2 = new DateTime($request->checkout);
-        $days = $datetime1->diff($datetime2)->format('%a');
-
-        // dd($days * $request->price );
-        $request->validate([
-            'checkin' => 'required|date',
-            'checkout' => 'required|date',
-            'guests' => 'required|numeric',
-            'property_id' => 'required|exists:properties,id'
+        $validatedData = $request->validate([
+            'property_id' => 'required|integer',
+            'user_id' => 'required|string',
+            'start_date' => 'required|date_format:Y-m-d',
+            'end_date' => 'required|date_format:Y-m-d|after:start_date',
+            'total' => 'required|numeric'
         ]);
 
-        Booking::create([
+        // $datetime1 = new DateTime($request->start_date);
+        // $datetime2 = new DateTime($request->end_date);
+        // $days = $datetime1->diff($datetime2)->format('%a');
+
+
+        $booking = Booking::create([
             'user_id' => $request->user_id,
             'property_id' => $request->property_id,
-            'start_date' => $request->checkin,
-            'end_date' => $request->checkout,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
             'status' => 'pending',
-            'total' => $request->price * ($days + 1),
+            'total' => $request->total,
 
         ]);
 
-        return "done";
+        $booking_id = $booking->id;
+        Payment::create([
+            'user_id' => $request->user_id,
+            "booking_id" => $booking_id,
+            'amount' => $request->total,
+            'payment_method' => 'visa',
+            'status' => 'completed'
+        ]);
+
+
+        // Process payment logic here
+        // Return JSON response
+        return response()->json([
+            'success' => true,
+            'message' => 'Booking processed successfully',
+            'data' => $validatedData,
+            'payment_status' => 'completed'
+        ], 200);
 
     }
 

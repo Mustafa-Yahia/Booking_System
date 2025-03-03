@@ -6,6 +6,8 @@ let stars = document.getElementsByClassName('bx-star');
 // for calendar related logic
 document.addEventListener('DOMContentLoaded', function() {
 
+    // reset local storege
+    localStorage.clear();
     document.getElementById('stars').value = 0; // to reset the stars value on refresh
 
     // first we need to get the property id
@@ -94,28 +96,58 @@ function validateForm() {
 async function checkAvailability(event) {
     event.preventDefault(); // Prevent the form from submitting
 
+
     let propertyData = document.getElementById('property-id');
+    let user_id = document.getElementById('user_id');
+    let price = document.getElementById('price');
+
     let data = await fetch(`/api/booked/${propertyData.getAttribute('data-id')}`);
     let dates = await data.json();
 
-    console.log(dates)
     let checkin = document.getElementById('checkin').value;
     let checkout = document.getElementById('checkout').value
-    console.log(checkin)
+
 
     let desiredDates = getDays(checkin , checkout);
-    console.log(desiredDates)
 
     for(let i = 0; i < desiredDates.length; i++) {
         if(dates.includes(desiredDates[i])) {
-            alert('Selected dates are not available.');
+            Swal.fire({
+                icon: "error",
+                title: "Unavailable",
+                text: "The selected date are alrady booked, please choose another date",
+              });
             return false;
         }
+
+
     }
 
-    // If dates are available, submit the form
-    event.target.submit();
-    return true;
+    Swal.fire({
+        title: "Are you sure you want to book this property?",
+        showCancelButton: true,
+        text: `${desiredDates.length} Nights * ${parseInt(price.getAttribute('data-id'))} = ${desiredDates.length * parseInt(price.getAttribute('data-id'))} JOD`,
+        confirmButtonText: "Procced to payment",
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+            let dataToStore = {
+                property_id: propertyData.getAttribute('data-id'),
+                user_id: user_id.value,
+                start_date: checkin,
+                end_date: checkout,
+                total: desiredDates.length * price.getAttribute('data-id')
+            };
+
+            localStorage.setItem("bookingData",  JSON.stringify(dataToStore));
+            window.location.href = "/payment";
+            // return true;
+            return false;
+        }
+      });
+
+      return false
+
 }
 
 // helper function to calculate the days beetween two dates

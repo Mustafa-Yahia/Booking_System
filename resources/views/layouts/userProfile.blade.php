@@ -35,7 +35,7 @@
         </ul>
       </div>
       <div class="profile-actions">
-          <a href="{{ route('profile', Auth::user()->id) }}" class="btn">History</a>
+          <a href="{{ route('profile', Auth::user()->id)}}" class="btn">History</a>
           <a href="{{route('profile.edit', ['id' => Auth::user()->id, 'ref' => 'personal'])}}" class="btn">Edit personal info</a>
           <a href="{{route('profile.edit', ['id' => Auth::user()->id, 'ref' => 'pass'])}}" class="btn pass">Update password</a>
       </div>

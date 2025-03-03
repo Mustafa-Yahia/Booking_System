@@ -9,13 +9,14 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\LessorController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\auth\ForgotPasswordController;
+use App\Http\Controllers\auth\ResetPasswordController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FilterController;
-
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
+use App\Models\Payment;
 
 /*
 |--------------------------------------------------------------------------
@@ -134,11 +135,13 @@ Route::Resource('booking', BookingController::class);
 Route::resource('reviews', ReviewController::class);
 
 Route::resource('profile', UserController::class);
-Route::get('profile', [UserController::class, 'profile'])->name('profile');
+Route::get('user/profile', [UserController::class, 'profile'])->name('profile');
 Route::get('/profile/edit/{id}/{ref?}', [UserController::class, 'edit'])->name('profile.edit');
 
+Route::view('/privacy-policy', 'legal.privacy')->name('privacy');
+Route::view('/terms-conditions', 'legal.terms')->name('terms');
 
-
+Route::resource("payment", PaymentController::class);
 
 
 // End_Ghassan
