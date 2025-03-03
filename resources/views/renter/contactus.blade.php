@@ -56,7 +56,7 @@
         </form>
 
         <div>
-          <img src="{{ asset('storage/images/index/contact-png.png') }}" alt="About Image">
+          <img src="{{ asset('storage/images/index/images123.jpg') }}" alt="About Image">
         </div>
       </div>
     </div>
