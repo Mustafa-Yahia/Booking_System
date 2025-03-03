@@ -61,38 +61,51 @@
   );
 </script>
 
+
+
+
+<!-- About Real Estate Section -->
+<section class="about-real-estate top">
+    <div class="container text-center">
+        <div class="heading">
+            <h2>Why Choose Our Real Estate Services?</h2>
+        </div>
+        <p>We provide top-notch real estate solutions with a wide range of properties to choose from. Whether you are looking for a luxury condo, a waterfront villa, or a city-center apartment, we have the perfect option for you. Our team ensures seamless transactions, verified listings, and excellent customer support.</p>
+        <p>With years of experience in the real estate market, we guarantee the best deals, professional guidance, and properties that match your expectations. Explore our featured listings and find your dream home today!</p>
+    </div>
+</section>
+
+
 {{-- ===================== Start ٍsection Room ========================= --}}
 <section class="rooms">
-    <div class="container top">
-        <div class="heading text-center">
-            <h2>Real State Category</h2>
+    <div class="container mt-5">
+        <div class="heading text-center mb-4">
+            <h2>Real Estate Category</h2>
             <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
         </div>
 
-        <div class="content mtop">
-            <div class="owl-carousel owl-carousel1 owl-theme d-flex flex-wrap justify-content-center gap-3">
+        <div class="content">
+            <div class="owl-carousel owl-carousel1 owl-theme d-flex flex-wrap justify-content-center gap-4">
                 @foreach($properties as $property)
-                <div class="item gap-5">
-                    <a href="" class="text-decoration-none text-dark">
-                        <div class="card shadow-sm border-3 rounded-3" style="width: 300px;  display: flex; flex-direction: column;">
-                            <!-- Image-->
-                            @if($property->images->isNotEmpty())
-                            <div class="image" style="width: 100%; height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                <div class="item">
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div class="card shadow-sm border-3 rounded-3" style="max-width: 350px; height: 420px; display: flex; flex-direction: column; cursor: pointer;">
+
+                            <!-- صورة العقار -->
+                            <div class="image" style="width: 100%; height: 200px; overflow: hidden;">
                                 <img src="{{ asset('storage/' . $property->images->first()->image_path) }}"
                                      class="card-img-top rounded-top"
                                      alt="{{ $property->title }}"
-                                     style="max-width: 100%; max-height: 100%; object-fit: fill;">
+                                     style="width: 100%; height: 100%; object-fit: cover;">
                             </div>
-                            @endif
 
-
-                            <!-- card Contant-->
+                            <!-- محتوى البطاقة -->
                             <div class="card-body d-flex flex-column justify-content-between p-3">
-                                <h5 class="card-title fw-bold  text-center" style="color: #000;">{{ $property->title }}</h5>
+                                <h5 class="card-title fw-bold text-center text-dark">{{ $property->title }}</h5>
 
                                 <div class="mb-2">
-                                    <p class="mb-1"><i class="fa fa-map-marker-alt" style="color: #000"></i> <span class="fw-bold">Location:</span> {{ $property->location }}</p>
-                                    <p class="mb-1"><i class="fa fa-home" style="color:#000"></i> <span class="fw-bold">Type:</span> {{ $property->type }}</p>
+                                    <p class="mb-1"><i class="fa fa-map-marker-alt text-dark"></i> <span class="fw-bold">Location:</span> {{ $property->location }}</p>
+                                    <p class="mb-1"><i class="fa fa-home text-dark"></i> <span class="fw-bold">Type:</span> {{ $property->type }}</p>
                                     <p class="mb-1">
                                         <i class="fa fa-info-circle"></i> <span class="fw-bold">Status:</span>
                                         <span class="badge {{ strtolower($property->status) == 'available' ? 'bg-success' : 'bg-danger' }}">
@@ -108,8 +121,8 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <h6 class="price text-dark fw-bold mb-0">{{ $property->price_per_day }} JOD <span class="text-muted">/ Night</span></h6>
-                                    <a href="{{ route('properties.show', $property->id) }}" class="btn" style="background-color: #7fc142; color: white;">Book Now</a>
+                                    <h6 class="price text-dark fw-bold mb-0">${{ $property->price_per_day }} <span class="text-muted">/ Night</span></h6>
+                                    <a href="#" class="btn "  style="Background-color: #81c408; color:#fff">Book Now</a>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +133,6 @@
         </div>
     </div>
 </section>
-
 
 
 {{-- ===================== End section Room ========================= --}}

@@ -169,7 +169,7 @@
 </head>
 <body>
     <nav style=" background-color: #f8f9fa;position: relative; top: -100px;width:100%;text-align: center;">
-        <a href="{{ route("home") }}" style=" font-size: 40px;text-decoration: none;color:#000">hellow</a>
+        <a href="{{ route("index") }}" style=" font-size: 40px;text-decoration: none;color:#000">hellow</a>
     </nav>
     <div class="profile-container">
         <form method="POST" id="registerForm" action="{{ route('register') }}">

@@ -20,6 +20,7 @@ use App\Models\Payment;
 use App\Http\Controllers\PropertyImageController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -243,6 +244,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/notifications', [NotificationController::class, 'fetchNotifications'])->name('notifications.fetch');
 Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+
+Route::post('/check-email', [ContactController::class, 'checkEmail']);
 
 // Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('properties.filter');
 // Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('filterProperties');

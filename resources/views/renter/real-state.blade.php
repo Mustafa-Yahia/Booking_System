@@ -62,7 +62,7 @@
                     </div>
                 </div>
 
-                <!-- Property listing section -->
+
                 <div class="col-md-9 mb-4">
                     <div class="row">
                         <!-- Loop through each property and display details -->
@@ -78,7 +78,19 @@
 
                                 <div class="card-body d-flex flex-column justify-content-between p-3">
                                     <!-- Property title -->
-                                    <h5 class="card-title  fw-bold text-center" style="font-size: 1.25rem;">{{ $property->title }}</h5>
+                                    <h5 class="card-title fw-bold text-center" style="font-size: 1.25rem;">{{ $property->title }}</h5>
+
+                                    <!-- Property details (Location, Status, Type) -->
+                                    <div class="mb-2">
+                                        <p class="mb-1"><i class="fa fa-map-marker-alt text-dark"></i> <span class="fw-bold">Location:</span> {{ $property->location }}</p>
+                                        <p class="mb-1"><i class="fa fa-home text-dark"></i> <span class="fw-bold">Type:</span> {{ $property->type }}</p>
+                                        <p class="mb-1">
+                                            <i class="fa fa-info-circle"></i> <span class="fw-bold">Status:</span>
+                                            <span class="badge {{ strtolower($property->status) == 'available' ? 'bg-success' : 'bg-danger' }}">
+                                                {{ ucfirst($property->status) }}
+                                            </span>
+                                        </p>
+                                    </div>
 
                                     <!-- Property rating -->
                                     <div class="rate d-flex mb-2">
@@ -87,20 +99,20 @@
                                         @endfor
                                     </div>
 
-                                    <!-- Property description -->
-                                    <p class="card-text" style="font-size: 0.875rem; color: #555; flex-grow: 1; margin-bottom: 1rem;">{{ $property->description }}</p>
-
                                     <!-- Price and booking button -->
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-between align-items-center gap-3">
                                         <!-- Book Now button -->
-                                        <a href="{{route('properties.show', $property->id)}}" class="primary-btn btn primary-btn" style="font-size: 0.875rem; padding: 0.5rem 0.3rem; width: 50%; background-color: #81c408; border-color: #81c408; transition: background-color 0.3s, border-color 0.3s;">
-                                            View Details
-                                        </a>
+                                        <a href="{{ route('properties.show', $property->id) }}"
+                                            class="btn flex-grow-1"
+                                            style="font-size: 0.875rem; padding: 0.5rem 0.3rem; background-color: #81c408; color: white;">
+                                            Book Now
+                                         </a>
+
 
                                         <!-- Price per night -->
-                                        <h3 class="price" style="font-size: 1rem; font-weight: bold; margin: 0; display: flex; align-items: center; white-space: nowrap;">
+                                        <h3 class="price text-end" style="font-size: 1rem; font-weight: bold; margin: 0; white-space: nowrap; min-width: 80px;">
                                             {{ $property->price_per_day }} JOD
-                                            <span class="text-muted" style="font-size: 0.875rem; margin-left: 5px;">Per Night</span>
+                                            <span class="text-muted" style="font-size: 0.875rem; margin-left: 5px;">\Night</span>
                                         </h3>
                                     </div>
                                 </div>
