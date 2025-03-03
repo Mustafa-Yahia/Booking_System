@@ -32,7 +32,7 @@ class PropertyController extends Controller
 
 
         $myTotalRevenue = Booking::whereHas('property', function($query) {
-            $query->where('user_id', Auth::user()->id);  
+            $query->where('user_id', Auth::user()->id);
         })->sum('total');
 
 
@@ -150,12 +150,12 @@ public function index(Request $request)
     public function show(Property $property)
 {
 
-    if(Auth::user()->role == "lessor") {
+    if(Auth::check() && Auth::user()->role == "lessor") {
 
         $property = Property::with(['images', 'reviews.user'])->findOrFail($property->id);
         return view('lessor.properties.show', compact('property'));
     }
-    $reviews = Review::where('property_id', $property->id)->get();
+    $reviews = Review::where('property_id', $property->id)->paginate(6);
     $images = Property::find($property->id)->images;
     $property = Property::find($property->id);
     return view('properties.show', compact('property', 'images', 'reviews'));

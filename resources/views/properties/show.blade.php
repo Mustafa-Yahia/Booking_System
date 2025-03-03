@@ -58,7 +58,9 @@
                     <h2>{{ number_format($property->price_per_day, 2) }} JOD <span> / night</span></h2>
                     <form action="{{route('payment.index')}}" method="GET" onsubmit="return checkAvailability(event)">
                         @csrf
+                        @if(Auth::check())
                         <input type="hidden" name="user_id" value="{{Auth::user()->id}}" id="user_id">
+                        @endif
                         <label for="checkin">Check-in</label>
                         <input type="date" id="checkin" name="checkin" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
 
@@ -92,11 +94,14 @@
                     <img src="{{asset('storage/' . $review->user->image)}}" alt="" class="profile-pic">
                     <span>{{ucfirst($review->user->name)}}</span>
                     <br>
+                </div>
+                <div >
                     @for ($i = 0; $i < $review->rating; $i++)
                     <span><i class='bx bxs-star bx-review'></i></span>
                     @endfor
-                    <small>{{$review->created_at->format('Y-m-d')}}</small>
+
                 </div>
+                    <small>{{$review->created_at->format('Y-m-d')}}</small>
                 <div class="review-body">
                     <p>{{$review->comment}}</p>
                 </div>
@@ -104,9 +109,12 @@
             @endforeach
         </div>
     </div>
+    <div class="pagination">
+        {{ $reviews->links('pagination::simple-bootstrap-4') }}
+    </div>
 
     {{-- add a review only for renters --}}
-    @if(Auth::user()->role == 'renter')
+    {{-- @if(Auth::check() && Auth::user()->role == 'renter') --}}
     <form action="{{route('reviews.store')}}" method="POST" class="review-form" onsubmit="return validateForm()">
         @csrf
         <div class="rating">
@@ -118,13 +126,15 @@
         </div>
         <p class="error" id="rating-err"></p>
         <input type="hidden" name="stars" id="stars" value="0">
-        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+        @if(Auth::check())
+        <input type="hidden" name="user_id" value="{{Auth::user()->id}}" id='user_id_review'>
+        @endif
         <input type="hidden" name="property_id" value="{{$property->id}}">
         <textarea name="review" id="review" placeholder="Your review" cols="50" rows="5" class="review-textarea"></textarea>
         <p class="error" id="review-err"></p>
         <button type="submit" class="primary-btn">Add a Review</button>
     </form>
-    @endif
+    {{-- @endif --}}
 
 </section>
 

@@ -74,20 +74,38 @@ function  remove() // stars[i].classList.remove('bx-star'); /* this will cause a
 
 // validation for the rating
 function validateForm() {
+
+    let user_id = document.getElementById('user_id_review')
     let rating = document.getElementById("stars");
     let review = document.getElementById("review");
     let reviewErr = document.getElementById('review-err');
     let ratingErr = document.getElementById("rating-err");
+
+    ratingErr.innerHTML = "";
+    reviewErr.innerHTML = "";
+
+    if(!user_id) {
+        Swal.fire({
+            icon: "error",
+            title: "Login required",
+            text: "please log in",
+            showConfirmButton: false,
+            footer: '<a href="/login">Login</a>'
+          });
+        return false;
+    }
+
 
     if (rating.value == 0) {
         ratingErr.innerHTML = "can't leave an empty stars";
         return false;
     }
 
-    if (review.value == "") {
+    if (review.value.trim() == "") {
         reviewErr.innerHTML = "please fill the review";
         return false;
     }
+
 
     return true;
 }
@@ -97,8 +115,23 @@ async function checkAvailability(event) {
     event.preventDefault(); // Prevent the form from submitting
 
 
-    let propertyData = document.getElementById('property-id');
     let user_id = document.getElementById('user_id');
+
+
+    if(!user_id) {
+        Swal.fire({
+            icon: "error",
+            title: "Login required",
+            text: "please log in",
+            showConfirmButton: false,
+            footer: '<a href="/login">Login</a>'
+          });
+        return false;
+    }
+
+
+
+    let propertyData = document.getElementById('property-id');
     let price = document.getElementById('price');
 
     let data = await fetch(`/api/booked/${propertyData.getAttribute('data-id')}`);

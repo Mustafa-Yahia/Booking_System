@@ -31,13 +31,7 @@ use App\Http\Controllers\PropertyImageController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Majd
-
-
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -47,9 +41,6 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
-
 
 
 // end_Majd
@@ -113,32 +104,10 @@ Route::delete('/admin/reviews/{review}', [AdminController::class, 'destroyRevie'
 });
 
 
-
-
-
-
-
-
-
-
-
 //end_Ebrahim
 
 
-
-
-
-
-
-
-
-
-
 // Ghassan
-
-
-
-
 
 Route::Resource('renter', RenterController::class);
 
@@ -155,7 +124,7 @@ Route::get('/profile/edit/{id}/{ref?}', [UserController::class, 'edit'])->name('
 Route::view('/privacy-policy', 'legal.privacy')->name('privacy');
 Route::view('/terms-conditions', 'legal.terms')->name('terms');
 
-Route::resource("payment", PaymentController::class);
+Route::resource("payment", PaymentController::class)->middleware('auth');
 
 
 // End_Ghassan
