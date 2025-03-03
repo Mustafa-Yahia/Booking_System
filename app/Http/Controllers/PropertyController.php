@@ -30,11 +30,10 @@ class PropertyController extends Controller
             $query->where('user_id', $userId);
         })->count();
 
-        $myTotalRevenue = Booking::whereHas('property', function ($query) use ($userId) {
-            $query->where('user_id', $userId);
-        })->get()->sum(function ($booking) {
-            return $booking->property->price_per_day * $booking->duration;
-        });
+
+        $myTotalRevenue = Booking::whereHas('property', function($query) {
+            $query->where('user_id', Auth::user()->id);  
+        })->sum('total');
 
 
         $myBookingsData = [];
@@ -148,11 +147,12 @@ public function index(Request $request)
         return redirect()->route('lessor.properties.index')->with('success', 'Property added successfully!');
     }
 
-    public function show($id)
+    public function show(Property $property)
 {
+
     if(Auth::user()->role == "lessor") {
 
-        $property = Property::with(['images', 'reviews.user'])->findOrFail($id);
+        $property = Property::with(['images', 'reviews.user'])->findOrFail($property->id);
         return view('lessor.properties.show', compact('property'));
     }
     $reviews = Review::where('property_id', $property->id)->get();

@@ -31,7 +31,7 @@
         <!-- Property Info -->
         <div class="property-content">
             <div class="left-column">
-                <h1>{{ $property->title }}</h1>
+                <h1>{{ ucfirst($property->title) }}</h1>
                 <p class="location"><i class="fas fa-map-marker-alt"></i> {{ $property->location }}</p>
 
                 <div class="details">
@@ -67,10 +67,10 @@
 
                         <label for="guests">Guests</label>
                         <select id="guests" name="guests">
-                            <option value="1">1 Guest</option>
-                            <option value="2">2 Guests</option>
-                            <option value="3">3 Guests</option>
-                            <option value="4">4 Guests</option>
+                            @for ($i =1 ; $i <= $property->guest_limit ; $i++)
+                            <option value="{{$i}}">{{$i}} Guest</option>
+
+                            @endfor
                         </select>
                         <input type="hidden" name="property_id" value="{{$property->id}}">
                         <input type="hidden" name="owner" value="{{$property->owner->id}}">

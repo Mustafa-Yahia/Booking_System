@@ -17,6 +17,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Models\Payment;
+use App\Http\Controllers\PropertyImageController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -165,8 +167,6 @@ Route::resource("payment", PaymentController::class);
 
 
 
-use App\Http\Controllers\PropertyImageController;
-use App\Http\Controllers\BookingController;
 
 Route::middleware(['auth', 'role:lessor'])->group(function() {
     // Lessor Dashboard

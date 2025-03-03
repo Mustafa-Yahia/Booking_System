@@ -29,7 +29,7 @@
                             </div>
 
                             <!-- Location filter -->
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <select name="location" class="form-select">
                                     <option value="">Select Location</option>
                                     <option value="city1">City 1</option>
@@ -54,7 +54,7 @@
                                 <!-- Amenities checkboxes -->
 
 
-                            </div>
+                            </div> --}}
 
                             <!-- Apply Filters button -->
                             <button type="submit" class="btn  w-100" style="background-color: #7fc142; color: #fff" >Apply Filters</button>

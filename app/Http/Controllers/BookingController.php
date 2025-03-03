@@ -101,11 +101,10 @@ class BookingController extends Controller
     public function update(Request $request, Booking $booking)
     {
         $request->validate([
-            'total_price' => 'required|numeric|min:0',
-            'status' => 'required|in:pending,approved,rejected'
+            'status' => 'required|in:pending,confirmed,cancelled'
         ]);
 
-        $booking->update($request->only('total_price', 'status'));
+        $booking->update($request->only( 'status'));
 
         return redirect()->back()->with('success', 'Booking updated successfully!');
     }
@@ -115,7 +114,8 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        $booking->delete();
+        return redirect()->back()->with('success', 'Booking deleted successfully!');
     }
 
     public function getBookedDates($propertyId) {

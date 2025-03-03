@@ -9,7 +9,6 @@
             <i class="fas fa-arrow-left"></i> Back to Properties
         </a>
     </div>
-
     <h1 class="mb-4 text-center fw-bold">🏠 {{ $property->title }}</h1>
 
     <div class="card shadow-sm border-0 rounded-lg">

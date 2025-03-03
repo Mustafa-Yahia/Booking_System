@@ -42,7 +42,6 @@
             @foreach($properties as $property)
                 <div class="col-md-4">
                     <div class="card shadow-sm border-0 rounded-lg">
-
                         @if($property->images->isNotEmpty())
                             <div id="carousel{{ $property->id }}" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">

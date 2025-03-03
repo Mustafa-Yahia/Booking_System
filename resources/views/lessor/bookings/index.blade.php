@@ -9,7 +9,6 @@
     @if(session('success'))
         <div class="alert alert-success text-center">{{ session('success') }}</div>
     @endif
-
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -47,9 +46,9 @@
                             <td>{{ $booking->user->name }}</td>
                             <td>{{ $booking->start_date }}</td>
                             <td>{{ $booking->end_date }}</td>
-                            <td>${{ number_format($booking->total_price, 2) }}</td>
+                            <td>${{ number_format($booking->total, 2) }}</td>
                             <td>
-                                <span class="badge bg-{{ $booking->status == 'approved' ? 'success' : ($booking->status == 'rejected' ? 'danger' : 'warning') }}">
+                                <span class="badge bg-{{ $booking->status == 'confirmed' ? 'success' : ($booking->status == 'cancelled' ? 'danger' : 'warning') }}">
                                     {{ ucfirst($booking->status) }}
                                 </span>
                             </td>
@@ -58,11 +57,10 @@
                                     <form action="{{ route('bookings.update', $booking->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <input type="number" name="total_price" value="{{ $booking->total_price }}" class="form-control form-control-sm mb-2" step="0.01" required>
                                         <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
                                             <option value="pending" {{ $booking->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                            <option value="approved" {{ $booking->status == 'approved' ? 'selected' : '' }}>Approved</option>
-                                            <option value="rejected" {{ $booking->status == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                            <option value="confirmed" {{ $booking->status == 'confirmed' ? 'selected' : '' }}>confirmed</option>
+                                            <option value="cancelled" {{ $booking->status == 'cancelled' ? 'selected' : '' }}>cancelled</option>
                                         </select>
                                     </form>
                                     <form action="{{ route('bookings.destroy', $booking->id) }}" method="POST">
