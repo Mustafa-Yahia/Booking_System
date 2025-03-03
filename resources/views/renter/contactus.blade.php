@@ -32,7 +32,7 @@
         <div>
           <span><i class="fas fa-map-marker-alt"></i></span>
           <span>Address</span>
-          <span class="text">2939 Patrick Street, Victoria TX, United States</span>
+          <span class="text">Amman, Jordan</span>
         </div>
         <div>
           <span><i class="fas fa-clock"></i></span>
@@ -41,7 +41,7 @@
         </div>
       </div>
 
-      <div class="contact-form">
+      <div class="contact-form"  onsubmit="return sub(event)">
         <form>
           <div>
             <input type="text" class="form-control" placeholder="First Name">
@@ -56,24 +56,35 @@
         </form>
 
         <div>
-          <img src="{{ asset('storage/images/index/images123.jpg') }}" alt="About Image">
+          <img src="{{ asset('storage/images/index/images123.jpg') }}" alt="About Image" style="width: 400px">
         </div>
       </div>
     </div>
 
     <div class="map">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d223700.1490386933!2d-97.11558670486288!3d28.829485511234168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864266db2e2dac3b%3A0xeee20d566f63267d!2sVictoria%2C%20TX%2C%20USA!5e0!3m2!1sen!2snp!4v1604921178092!5m2!1sen!2snp" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+      {{-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d223700.1490386933!2d-97.11558670486288!3d28.829485511234168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864266db2e2dac3b%3A0xeee20d566f63267d!2sVictoria%2C%20TX%2C%20USA!5e0!3m2!1sen!2snp!4v1604921178092!5m2!1sen!2snp" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> --}}
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1844.0521558338373!2d35.74389699944346!3d32.04201560717643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151ca2aa6c9505af%3A0xc1d8fa75aade030f!2sSalt%20Institute%20for%20careers%20traditional%20crafts!5e0!3m2!1sen!2sjo!4v1741034368298!5m2!1sen!2sjo" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 
-    {{-- <div class="contact-footer">
-      <h3>Follow Us</h3>
-      <div class="social-links">
-        <a href="#" class="fab fa-facebook-f"></a>
-        <a href="#" class="fab fa-twitter"></a>
-        <a href="#" class="fab fa-instagram"></a>
-        <a href="#" class="fab fa-linkedin"></a>
-        <a href="#" class="fab fa-youtube"></a>
-      </div>
-    </div> --}}
+
+    <script>
+
+         function sub(event) {
+
+            event.preventDefault();
+
+            Swal.fire({
+            icon: "success",
+            title: "Message sent",
+            showConfirmButton: false,
+            timer: 1500
+            });
+
+            setTimeout(() => {
+                event.target.submit();
+
+            }, 2000);
+        }
+    </script>
   </section>
 @endsection
