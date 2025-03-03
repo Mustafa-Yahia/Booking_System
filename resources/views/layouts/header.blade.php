@@ -3,7 +3,7 @@
 <header>
     <div class="content flex_space">
       <div class="logo">
-        <img src="{{ asset('storage/images/index/logo.png') }}" alt="Logo">
+        <img src="{{ asset('storage/images/index/logo3.jpg') }}" alt="Logo">
       </div>
       <div class="navlinks">
         <ul id="menulist">
