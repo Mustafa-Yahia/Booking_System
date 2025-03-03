@@ -14,6 +14,8 @@ use App\Models\Booking;
 
 class PropertyController extends Controller
 {
+
+    
     public function dashboard()
 {
     if (Auth::check() && Auth::user()->role == "lessor") {

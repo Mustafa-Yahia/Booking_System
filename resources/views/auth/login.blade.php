@@ -91,6 +91,10 @@
             text-decoration: underline;
         }
 
+        .text-primary a{
+            color: #81c408
+        }
+
         /* Loading Screen Styles */
 .loading-screen {
     position: fixed;
@@ -124,8 +128,6 @@
 <body>
 
 
-
-
     <div class="login-container">
         <form method="POST" action="{{ route('login') }}">
             @csrf
@@ -151,6 +153,20 @@
                 @error('password') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
 
+            <!-- Forgot Password & Remember Me in the same row -->
+            <div class="d-flex justify-content-between mb-3">
+                <!-- Remember Me Checkbox -->
+                <div class="form-check">
+                    <input name="remember" type="checkbox" class="form-check-input" id="remember">
+                    <label class="form-check-label" for="remember" style="color: #000;">Remember Me</label>
+                </div>
+
+                <!-- Forgot Password Link -->
+                <div>
+                    <a href="{{ route('password.request') }}" style="color: #000;">Forgot Password?</a>
+                </div>
+            </div>
+
             <div class="input-group">
                 <button type="submit" class="btn btn-primary w-100">
                     <i class="fas fa-sign-in-alt"></i> Login
@@ -159,6 +175,8 @@
 
             <p class="text-center mt-3">Don't have an account? <a href="{{ route('register') }}" class="text-login">Register</a></p>
         </form>
+
+
     </div>
 
     <!-- Loading Screen -->
@@ -167,20 +185,13 @@
 </div>
 
 
+
+
+
+<script src="{{ asset('js/login/localstorage.js') }}"></script>
+<script src="{{ asset('js/login/login.js') }}"></script>
+
 </body>
-
-<script>
-    document.getElementById("registerForm")?.addEventListener("submit", function(event) {
-        document.getElementById("loadingScreen").style.display = "flex";
-
-        setTimeout(function() {
-            event.target.submit();
-        }, 3000);
-    });
-
-    window.addEventListener('beforeunload', function () {
-        document.getElementById("loadingScreen").style.display = "flex";
-    });
 </script>
 
 </html>

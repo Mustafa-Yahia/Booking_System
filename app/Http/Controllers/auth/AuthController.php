@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
@@ -21,13 +21,13 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        $remember = $request->has('remember');
+        $remember = $request->has('remember');  // تأكد من أن هذا السطر يقوم بتحديد ما إذا كانت خانة "تذكرني" محددة.
 
         if (Auth::attempt($credentials, $remember)) {
             $user = Auth::user();
 
             if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard')->with('success', 'Successfully logged in as administrator!');
+                return redirect()->route('admin.stats')->with('success', 'Successfully logged in as administrator!');
             } elseif ($user->role === 'lessor') {
                 return redirect()->route('lessor.dashboard')->with('success', 'Welcome Lessor!');
             } else {
