@@ -1,17 +1,23 @@
 <?php
 
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\RenterController;
 // use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\LessorController;
-use App\Http\Controllers\RenterController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\auth\ForgotPasswordController;
+use App\Http\Controllers\auth\ResetPasswordController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FilterController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserController;
+use App\Models\Payment;
+use App\Http\Controllers\PropertyImageController;
 
 
 /*
@@ -25,7 +31,9 @@ use App\Http\Controllers\FilterController;
 |
 */
 
-
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Majd
 
@@ -44,6 +52,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
+// end_Majd
 
 Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', function () {
     return view('admin.dashboard');
@@ -110,7 +119,16 @@ Route::delete('/admin/reviews/{review}', [AdminController::class, 'destroyRevie'
 
 
 
+
+
+
 //end_Ebrahim
+
+
+
+
+
+
 
 
 
@@ -122,11 +140,22 @@ Route::delete('/admin/reviews/{review}', [AdminController::class, 'destroyRevie'
 
 
 
+Route::Resource('renter', RenterController::class);
 
+Route::resource('properties', PropertyController::class);
 
+Route::Resource('booking', BookingController::class);
 
+Route::resource('reviews', ReviewController::class);
 
+Route::resource('profile', UserController::class);
+Route::get('user/profile', [UserController::class, 'profile'])->name('profile');
+Route::get('/profile/edit/{id}/{ref?}', [UserController::class, 'edit'])->name('profile.edit');
 
+Route::view('/privacy-policy', 'legal.privacy')->name('privacy');
+Route::view('/terms-conditions', 'legal.terms')->name('terms');
+
+Route::resource("payment", PaymentController::class);
 
 
 // End_Ghassan
@@ -136,20 +165,33 @@ Route::delete('/admin/reviews/{review}', [AdminController::class, 'destroyRevie'
 
 // Mohammed
 
-use App\Http\Controllers\PropertyImageController;
 
-Route::get('/lessor/dashboard', [PropertyController::class, 'dashboard'])->name('lessor.dashboard');
-// Routes for properties
-Route::get('/lessor/properties', [PropertyController::class, 'index'])->name('lessor.properties.index');
-Route::get('/lessor/properties/create', [PropertyController::class, 'create'])->name('lessor.properties.create');
-Route::post('/lessor/properties', [PropertyController::class, 'store'])->name('lessor.properties.store');
-Route::get('/lessor/properties/{property}/edit', [PropertyController::class, 'edit'])->name('lessor.properties.edit');
-Route::put('/lessor/properties/{property}', [PropertyController::class, 'update'])->name('lessor.properties.update');
-Route::get('/lessor/properties/{property}', [PropertyController::class, 'show'])->name('lessor.properties.show');
-Route::delete('/lessor/properties/{property}', [PropertyController::class, 'destroy'])->name('lessor.properties.destroy');
 
-// Routes for property images
-Route::delete('/lessor/properties/{property}/images/{image}', [PropertyImageController::class, 'destroy'])->name('lessor.property_images.destroy');
+
+Route::middleware(['auth', 'role:lessor'])->group(function() {
+    // Lessor Dashboard
+    Route::get('/lessor/dashboard', [PropertyController::class, 'dashboard'])->name('lessor.dashboard');
+
+    // Routes for properties
+    Route::get('/lessor/properties', [PropertyController::class, 'index'])->name('lessor.properties.index');
+    Route::get('/lessor/properties/create', [PropertyController::class, 'create'])->name('lessor.properties.create');
+    Route::post('/lessor/properties', [PropertyController::class, 'store'])->name('lessor.properties.store');
+    Route::get('/lessor/properties/{property}/edit', [PropertyController::class, 'edit'])->name('lessor.properties.edit');
+    Route::put('/lessor/properties/{property}', [PropertyController::class, 'update'])->name('lessor.properties.update');
+    Route::get('/lessor/properties/{property}', [PropertyController::class, 'show'])->name('lessor.properties.show');
+    Route::delete('/lessor/properties/{property}', [PropertyController::class, 'destroy'])->name('lessor.properties.destroy');
+
+    // Routes for property images
+    Route::delete('/lessor/properties/{property}/images/{image}', [PropertyImageController::class, 'destroy'])->name('lessor.property_images.destroy');
+
+    // Routes for bookings
+    Route::resource('bookings', BookingController::class);
+    Route::get('lessor/properties/{property}/bookings', [BookingController::class, 'indexForLessor'])->name('lessor.properties.bookings.index');
+    Route::put('bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
+    Route::delete('bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+});
+
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 // End_Mohammed
@@ -157,10 +199,18 @@ Route::delete('/lessor/properties/{property}/images/{image}', [PropertyImageCont
 
 
 
-//Mustafa
-// Mustafa
 
-Route::get('/', [PropertyController::class, 'index'])->name('home');
+
+
+
+
+
+
+
+
+
+
+Route::get('/', [PropertyController::class, 'index'])->name('index');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -170,6 +220,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('contact-us');
 });
 
+//Mustafa
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.email');

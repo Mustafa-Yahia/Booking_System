@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
+<script src="{{asset('js/admin/manageForms.js')}}" defer></script>
+
 <div class="container mt-4">
     <h1>Properties List</h1>
 
@@ -40,6 +42,7 @@
         <thead>
             <tr>
                 <th>Title</th>
+                <th>Propereties Owner</th>
                 <th>Location</th>
                 <th>Price/Day</th>
                 <th>Status</th>
@@ -51,6 +54,7 @@
             @foreach($properties as $property)
                 <tr>
                     <td>{{ $property->title }}</td>
+                    <td>{{ $property->owner->name }}</td>
                     <td>{{ $property->location }}</td>
                     <td>${{ number_format($property->price_per_day, 2) }}</td>
                     <td>
@@ -65,11 +69,11 @@
                         @endforeach
                     </td>
                     <td>
-                        <a href="{{ route('admin.properties.reviews', $property->id) }}" class="btn btn-info btn-sm">View Reviews</a>
+                        <a href="{{ route('admin.properties.reviews', $property->id) }}" class="btn btn-success btn-sm">View Reviews</a>
                     </td>
 
                     <td>
-                        <form action="{{ route('admin.properties.delete', $property->id) }}" method="POST">
+                        <form action="{{ route('admin.properties.delete', $property->id) }}" method="POST" onsubmit="return validateDeleteProperty(event)">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>

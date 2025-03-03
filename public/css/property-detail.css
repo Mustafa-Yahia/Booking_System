@@ -1,0 +1,230 @@
+.property-detail {
+    padding: 50px 0;
+    font-family: Arial, sans-serif;
+}
+.container {
+    width: 100%;
+    margin: auto;
+}
+
+/* Property Images (Grid Layout) */
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.main-image img {
+    width: 100%;
+    height: 430px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.secondary-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.secondary-images img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Layout Structure */
+.property-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+/* Left Column */
+.left-column {
+    width: 60%;
+}
+.left-column h1 {
+    font-size: 28px;
+    font-weight: bold;
+}
+.location {
+    font-size: 18px;
+    color: #717171;
+}
+.details p {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+.description {
+    margin-top: 15px;
+}
+
+/* Right Column (Booking Section) */
+.right-column {
+    width: 35%;
+}
+.booking-box {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.booking-box h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+.booking-box span {
+    font-weight: normal;
+    color: #717171;
+}
+.booking-box form {
+    display: flex;
+    flex-direction: column;
+}
+.booking-box label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.booking-box input, .booking-box select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+.primary-btn {
+    background: #FF5A5F;
+    padding: 12px;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    border: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .property-content {
+        flex-direction: column;
+    }
+    .left-column, .right-column {
+        width: 100%;
+    }
+    .image-grid {
+        grid-template-columns: 1fr;
+    }
+    .secondary-images {
+        grid-template-columns: 1fr;
+    }
+}
+
+.owner-details {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.small {
+    font-size: 14px;
+    color: #717171;
+}
+
+
+
+
+
+/* General styles for a clean modern input */
+input[type="date"] {
+    appearance: none; /* Remove default styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    width: 180px;
+}
+
+/* Hide default calendar icon in browsers */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+/* When input is focused */
+input[type="date"]:focus {
+    outline: none;
+    border-color: #000;
+}
+
+
+/* start of reviews */
+
+.reviews-section {
+    width: 60%;
+    padding: 1vh 2vh;
+    position: relative;
+    left: 7%;
+    z-index: 2; /* Ensure the reviews section has a higher z-index */
+}
+
+.reviews {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+}
+
+
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vh;
+    max-width: fit-content;
+    margin: 2vh 0;
+    gap: 3vh;
+    z-index: 2; /* Ensure the cards have a higher z-index */
+}
+
+
+
+.review-form {
+    margin: 3vh;
+    position: relative;
+    left: 15%;
+    display:  flex;
+    flex-direction: column;
+    max-width: fit-content;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.review-form > textarea, .review-form > button {
+    max-width: fit-content;
+    margin: 3vh 0;
+
+}
+
+.review-form > button {
+    display: inline-block;
+    margin: auto;
+}
+
+.error {
+    color: red;
+    font-size: 1rem;
+    margin-right: auto;
+}
+ /* end of reviews */
+

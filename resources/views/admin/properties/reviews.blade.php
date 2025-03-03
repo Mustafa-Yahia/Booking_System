@@ -1,16 +1,18 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container mt-4">
-    <h1>Property Reviews</h1>
-
-    <a href="{{ route('admin.properties.index') }}" class="btn btn-secondary mb-3">Back to Properties</a>
-
-    <div class="card">
-        <div class="card-header">
-            <h4>Reviews for: {{ $property->title }}</h4>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card" style="width: 80%; max-width: 900px;">
+        <div class="card-header text-center">
+            <h4 class="fw-bold text-primary">Reviews for: {{ $property->title }}</h4>
         </div>
         <div class="card-body">
+            <h1 class="text-center">Property Reviews</h1>
+
+            <div class="text-center mb-4">
+                <a href="{{ route('admin.properties.index') }}" class="btn btn-secondary">Back to Properties</a>
+            </div>
+
             @if($reviews->count() > 0)
                 <table class="table">
                     <thead>
@@ -42,8 +44,37 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                <!-- Pagination links -->
+                <div class="d-flex justify-content-center mt-3">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination pagination-sm">
+                            <!-- Previous page link -->
+                            <li class="page-item {{ $reviews->onFirstPage() ? 'disabled' : '' }}">
+                                <a class="page-link" href="{{ $reviews->previousPageUrl() }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+
+                            <!-- Page number links -->
+                            @foreach ($reviews->getUrlRange(1, $reviews->lastPage()) as $page => $url)
+                                <li class="page-item {{ $reviews->currentPage() == $page ? 'active' : '' }}">
+                                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                </li>
+                            @endforeach
+
+                            <!-- Next page link -->
+                            <li class="page-item {{ $reviews->hasMorePages() ? '' : 'disabled' }}">
+                                <a class="page-link" href="{{ $reviews->nextPageUrl() }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
             @else
-                <p class="text-muted">No reviews found for this property.</p>
+                <p class="text-muted text-center">No reviews found for this property.</p>
             @endif
         </div>
     </div>

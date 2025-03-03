@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // المستأجر الذي كتب التقييم
-            $table->foreignId('property_id')->constrained('properties')->onDelete('cascade'); // العقار الذي تم تقييمه
-            $table->tinyInteger('rating')->unsigned(); // التقييم من 1 إلى 5
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('property_id')->constrained('properties')->onDelete('cascade');
+            $table->tinyInteger('rating')->unsigned(); 
             $table->text('comment')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -25,8 +26,10 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-        Schema::dropIfExists('reviews');
-    }
+    public function down()
+{
+    Schema::table('reviews', function (Blueprint $table) {
+        $table->dropSoftDeletes();
+    });
+}
 };

@@ -56,6 +56,7 @@ class AdminController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => bcrypt($request->password),
             'role' => $request->role,
             'address' => $request->address,
@@ -85,6 +86,7 @@ class AdminController extends Controller
             'name' => $request->name,
             'address' => $request->address,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => $request->password ? bcrypt($request->password) : $user->password,
             'role' => $request->role,
         ]);
@@ -231,13 +233,36 @@ public function destroy($id)
         $bookingsCount = Booking::count();
         $totalRevenue = Booking::sum('total');
 
-        return view('admin.stats', compact('propertiesCount', 'usersCount', 'bookingsCount', 'totalRevenue'));
+        $monthlyRevenue = Booking::selectRaw('SUM(total) as revenue, MONTH(start_date) as month')
+                                ->groupBy('month')
+                                ->orderBy('month')
+                                ->get();
+
+        $monthlyBookings = Booking::selectRaw('COUNT(id) as bookings, MONTH(start_date) as month')
+                                ->groupBy('month')
+                                ->orderBy('month')
+                                ->get();
+
+        $revenueData = array_fill(1, 12, 0);
+        $bookingsData = array_fill(1, 12, 0);
+
+        foreach ($monthlyRevenue as $revenue) {
+            $revenueData[$revenue->month] = $revenue->revenue;
+        }
+
+        foreach ($monthlyBookings as $booking) {
+            $bookingsData[$booking->month] = $booking->bookings;
+        }
+
+        return view('admin.stats', compact('propertiesCount', 'usersCount', 'bookingsCount', 'totalRevenue', 'revenueData', 'bookingsData'));
     }
+
+
         // ======= Revie =======
         public function indexRevie($propertyId)
     {
         $property = Property::with('reviews.user')->findOrFail($propertyId);
-        $reviews = $property->reviews;
+       $reviews = $property->reviews()->paginate(7);
 
         return view('admin.properties.reviews', compact('property', 'reviews'));
     }

@@ -29,7 +29,7 @@
                             </div>
 
                             <!-- Location filter -->
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <select name="location" class="form-select">
                                     <option value="">Select Location</option>
                                     <option value="city1">City 1</option>
@@ -48,8 +48,16 @@
                                 </select>
                             </div>
 
+                            <!-- Amenities filter -->
+                            <div class="mb-3">
+                                <label class="form-check-label">Amenities</label><br>
+                                <!-- Amenities checkboxes -->
+
+
+                            </div> --}}
+
                             <!-- Apply Filters button -->
-                            <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                            <button type="submit" class="btn  w-100" style="background-color: #7fc142; color: #fff" >Apply Filters</button>
                         </form>
                     </div>
                 </div>
@@ -63,12 +71,14 @@
                             <div class="card shadow-sm border-0 rounded-3" style="width: 100%; height: 100%; display: flex; flex-direction: column; cursor: pointer;">
                                 <!-- Property image -->
                                 <div class="image">
-                                    <img src="{{ asset('storage/' . $property->images->first()->image_path) }}" class="card-img-top rounded-top" alt="{{ $property->title }}" style="height: 150px; object-fit: contain;">
+                                    @if($property->images->isNotEmpty())
+                                    <img src="{{ asset('storage/' . $property->images->first()->image_path) }}" class="card-img-top" alt="{{ $property->title }}" style="object-fit: cover; height: 250px;">
+                                    @endif
                                 </div>
 
                                 <div class="card-body d-flex flex-column justify-content-between p-3">
                                     <!-- Property title -->
-                                    <h5 class="card-title text-primary fw-bold text-center" style="font-size: 1.25rem;">{{ $property->title }}</h5>
+                                    <h5 class="card-title  fw-bold text-center" style="font-size: 1.25rem;">{{ $property->title }}</h5>
 
                                     <!-- Property rating -->
                                     <div class="rate d-flex mb-2">
@@ -83,11 +93,15 @@
                                     <!-- Price and booking button -->
                                     <div class="d-flex justify-content-between align-items-center">
                                         <!-- Book Now button -->
-                                        {{-- <a href="{{ route('book.show', $property->id) }}" class="btn" style="background-color: #7fc142; color: white;">Book Now</a> --}}
-                                        <a href="" class="btn" style="background-color: #7fc142; color: white;">Book Now</a>
+                                        <a href="{{route('properties.show', $property->id)}}" class="primary-btn btn primary-btn" style="font-size: 0.875rem; padding: 0.5rem 0.3rem; width: 50%; background-color: #81c408; border-color: #81c408; transition: background-color 0.3s, border-color 0.3s;">
+                                            View Details
+                                        </a>
 
                                         <!-- Price per night -->
-                                        <h6 class="price text-dark fw-bold mb-0">${{ $property->price_per_day }} <span class="text-muted">/ Night</span></h6>
+                                        <h3 class="price" style="font-size: 1rem; font-weight: bold; margin: 0; display: flex; align-items: center; white-space: nowrap;">
+                                            {{ $property->price_per_day }} JOD
+                                            <span class="text-muted" style="font-size: 0.875rem; margin-left: 5px;">Per Night</span>
+                                        </h3>
                                     </div>
                                 </div>
                             </div>

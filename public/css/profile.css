@@ -1,0 +1,210 @@
+/* Basic styles for the profile page */
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .profile-content {
+    display: flex;
+  }
+
+  .profile-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    margin-left: 3vh;
+  }
+
+  .profile-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
+
+  .profile-details ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .profile-details ul li {
+    margin: 8px 0;
+  }
+
+  .profile-actions .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #7fc142;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .profile-actions .pass {
+    background-color: rgb(255, 82, 82);
+  }
+
+  .profile-actions .logout-btn {
+    background-color: #DC3545;
+  }
+
+  .profile-main {
+    width: 70%;
+    padding: 20px;
+  }
+
+  .user-recent-activities ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .user-recent-activities ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+  }
+
+  /* start of image */
+
+  .profile-image {
+    margin: auto;
+  }
+  .image-container {
+    position: relative;
+    display: inline-block;
+
+}
+
+.image-container img {
+    width: 170px; /* Adjust as needed */
+    height: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.edit-pic {
+    position: absolute;
+    bottom: 10px; /* Adjust to move the button */
+    right: 10px;  /* Adjust to move the button */
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s;
+}
+
+.edit-pic:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+  /* end of image */
+
+  /* start of update */
+  /* General Container Styling */
+
+.flex-col {
+    flex: 1;
+}
+
+.info-container {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 30px auto;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-container:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Headings */
+.info-container h4 {
+    color: #7fc142;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Input Fields */
+.info-container .form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-container .form-control:focus {
+    border-color: #7fc142;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Labels */
+.info-container .form-label {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Buttons */
+.btn-primary {
+    background: #7fc142;
+    border: none;
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+    color: white;
+    margin-top: 5vh;
+
+
+}
+
+.btn-primary:hover {
+    background-color: #67b023;
+}
+
+/* Icons */
+h4 i {
+    font-size: 22px;
+    color: #7fc142;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .info-container {
+        padding: 20px;
+    }
+
+    .btn-primary {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+  /* end of update */
