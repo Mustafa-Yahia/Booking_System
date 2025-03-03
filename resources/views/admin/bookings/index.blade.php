@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
+<script src="{{asset('js/admin/manageForms.js')}}" defer></script>
+
 <div class="container mt-4">
     <h1>Bookings</h1>
 
@@ -59,10 +61,10 @@
                     </td>
                     <td>
                         <a href="{{ route('admin.bookings.show', $booking->id) }}" class="btn btn-success">View</a>
-                        <form action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST" style="display:inline;" onsubmit="return validateDeleteBooking(event)">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            <button type="submit" class="btn btn-danger" >Delete</button>
                         </form>
                     </td>
                 </tr>

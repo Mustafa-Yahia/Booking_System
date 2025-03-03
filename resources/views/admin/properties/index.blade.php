@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
+<script src="{{asset('js/admin/manageForms.js')}}" defer></script>
+
 <div class="container mt-4">
     <h1>Properties List</h1>
 
@@ -71,7 +73,7 @@
                     </td>
 
                     <td>
-                        <form action="{{ route('admin.properties.delete', $property->id) }}" method="POST">
+                        <form action="{{ route('admin.properties.delete', $property->id) }}" method="POST" onsubmit="return validateDeleteProperty(event)">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
