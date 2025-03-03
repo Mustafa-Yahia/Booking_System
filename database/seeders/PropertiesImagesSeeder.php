@@ -33,13 +33,11 @@ class PropertiesImagesSeeder extends Seeder
         ]);
         PropertyImage::insert([
             ['property_id' => 3, 'image_path' => 'images/properties/31.avif'],
-            ['property_id' => 3, 'image_path' => 'images/properties/32.avif'],
             ['property_id' => 3, 'image_path' => 'images/properties/33.avif'],
             ['property_id' => 3, 'image_path' => 'images/properties/34.avif'],
         ]);
         PropertyImage::insert([
             ['property_id' => 4, 'image_path' => 'images/properties/41.avif'],
-            ['property_id' => 4, 'image_path' => 'images/properties/42.avif'],
             ['property_id' => 4, 'image_path' => 'images/properties/43.avif'],
             ['property_id' => 4, 'image_path' => 'images/properties/44.jpg'],
         ]);
