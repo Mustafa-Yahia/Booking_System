@@ -1,51 +1,102 @@
 @extends('layouts.lessor')
-@include('layouts.header')
 
 @section('content')
-<div class="container">
-    <h2 class="my-4">Lessor Dashboard</h2>
-    <a href="{{ route('lessor.properties.create') }}" class="btn btn-primary mb-3">Add New Property</a>
+<div class="container mt-4">
+    <h1 class="mb-4 text-center fw-bold">📊 Lessor Dashboard</h1>
 
-    <div class="row">
-        @foreach($properties as $property)
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    @if($property->images->isNotEmpty())
-                        <div id="propertyCarousel{{ $property->id }}" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                @foreach($property->images as $key => $image)
-                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                        <img src="{{ asset('storage/' . $image->image_path) }}" class="d-block w-100" alt="Property Image">
-                                    </div>
-                                @endforeach
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel{{ $property->id }}" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel{{ $property->id }}" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                    @else
-                        <p>No images available</p>
-                    @endif
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $property->title }}</h5>
-                        <p class="card-text">{{ $property->description }}</p>
-                        <a href="{{ route('lessor.properties.show', $property->id) }}" class="btn btn-info">View Details</a>
-                        <a href="{{ route('lessor.properties.edit', $property->id) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('lessor.properties.destroy', $property->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </div>
+    <div class="row g-4">
+        {{-- My Properties --}}
+        <div class="col-md-4">
+            <div style="height: 160px" class="card shadow-sm border-0 rounded-lg text-center">
+                <div class="card-header bg-primary text-white fw-bold">
+                    <i class="fas fa-building fa-lg"></i> My Properties
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center;" class="card-body">
+                    <h1 class="fw-bold text-primary">{{ $myPropertiesCount }}</h1>
                 </div>
             </div>
-        @endforeach
+        </div>
+
+        {{-- Bookings on My Properties --}}
+        <div class="col-md-4">
+            <div style="height: 160px" class="card shadow-sm border-0 rounded-lg text-center">
+                <div class="card-header bg-success text-white fw-bold">
+                    <i class="fas fa-calendar-check fa-lg"></i> My Bookings
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center;" class="card-body">
+                    <h1 class="fw-bold text-success">{{ $myBookingsCount }}</h1>
+                </div>
+            </div>
+        </div>
+
+        {{-- Revenue from My Properties --}}
+        <div class="col-md-4">
+            <div style="height: 160px" class="card shadow-sm border-0 rounded-lg text-center">
+                <div class="card-header bg-danger text-white fw-bold">
+                    <i class="fas fa-dollar-sign fa-lg"></i> My Revenue
+                </div>
+                <div class="card-body">
+                    <h2 class="fw-bold text-danger">${{ number_format($myTotalRevenue, 2) }}</h2>
+                    <div class="progress">
+                        <div class="progress-bar bg-danger" style="width: {{ ($myTotalRevenue / 100000) * 100 }}%">
+                            ${{ number_format($myTotalRevenue, 2) }}
+                        </div>
+                    </div>
+                    <span>Target is $100,000/year</span>
+                </div>
+            </div>
+        </div>
     </div>
+
+    {{-- Chart Section --}}
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="card shadow-sm border-0 rounded-lg">
+                <div class="card-header bg-dark text-white fw-bold">
+                    📈 Booking & Revenue Trends
+                </div>
+                <div class="card-body">
+                    <canvas id="myStatsChart"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+{{-- Include Chart.js --}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('myStatsChart').getContext('2d');
+
+    var myStatsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'My Bookings',
+                data: [
+                    @foreach ($myBookingsData as $booking)
+                        {{ $booking }},
+                    @endforeach
+                ],
+                borderColor: '#f1c40f',
+                fill: false
+            }, {
+                label: 'My Revenue ($)',
+                data: [
+                    @foreach ($myRevenueData as $revenue)
+                        {{ $revenue }},
+                    @endforeach
+                ],
+                borderColor: '#e74c3c',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+
 @endsection

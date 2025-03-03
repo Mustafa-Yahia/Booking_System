@@ -7,6 +7,7 @@ use App\Models\Payment;
 use DatePeriod;
 use DateTime;
 use DateInterval;
+use App\Models\Property;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -14,9 +15,10 @@ class BookingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function indexForLessor(Property $property)
     {
-        //
+        $bookings = Booking::where('property_id', $property->id)->with('user')->get();
+        return view('lessor.bookings.index', compact('bookings', 'property'));
     }
 
     /**
@@ -98,7 +100,14 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        $request->validate([
+            'total_price' => 'required|numeric|min:0',
+            'status' => 'required|in:pending,approved,rejected'
+        ]);
+
+        $booking->update($request->only('total_price', 'status'));
+
+        return redirect()->back()->with('success', 'Booking updated successfully!');
     }
 
     /**
