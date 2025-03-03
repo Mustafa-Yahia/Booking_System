@@ -11,13 +11,14 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #f4f4f4;
-            overflow: hidden;
+    padding: 0;
+    margin-top: 100px;
+    /* height: 100vh;  */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f4f4f4;
         }
 
         @keyframes backgroundMove {
@@ -144,9 +145,32 @@
             }
         }
     </style>
+      <style>
+        footer {
+      width: 100%;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      margin-top: auto;
+
+  }
+
+
+          footer  a {
+              color: black;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s;
+      padding-right: 30px;
+            }
+
+
+            </style>
 </head>
 <body>
-
+    <nav style=" background-color: #f8f9fa;position: relative; top: -100px;width:100%;text-align: center;">
+        <a href="{{ route("home") }}" style=" font-size: 40px;text-decoration: none;color:#000">hellow</a>
+    </nav>
     <div class="profile-container">
         <form method="POST" id="registerForm" action="{{ route('register') }}">
             @csrf
@@ -221,7 +245,7 @@
 
             <!-- Register Button with Icon -->
             <div class="input-group">
-                <button type="submit" class="btn btn-primary w-100">
+                <button style="background-color: #6fa007;color:white" type="submit" class="btn w-100">
                     <i class="fas fa-user-plus"></i> Register
                 </button>
             </div>
@@ -229,6 +253,22 @@
             <p class="text-center mt-3">I already have an account? <a href="{{ route('login') }}" class="text-login">Login</a></p>
         </form>
     </div>
+
+    <footer>
+        <div class="container grid">
+
+
+          <div class="box">
+                <a href="#">Company History</a>
+                <a href="#">About Us</a>
+                <a href="{{ route("contact-us") }}">Contact Us</a>
+                <a href="#">Services</a>
+                <a href="#">Privacy Policy</a>
+          </div>
+
+
+        </div>
+      </footer>
 
 
     <script src="{{ asset('js/register/register.js') }}"></script>

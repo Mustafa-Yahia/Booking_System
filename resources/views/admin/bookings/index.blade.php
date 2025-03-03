@@ -58,7 +58,7 @@
                         </span>
                     </td>
                     <td>
-                        <a href="{{ route('admin.bookings.show', $booking->id) }}" class="btn btn-info">View</a>
+                        <a href="{{ route('admin.bookings.show', $booking->id) }}" class="btn btn-success">View</a>
                         <form action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')

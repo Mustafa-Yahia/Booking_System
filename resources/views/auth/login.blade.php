@@ -9,16 +9,20 @@
     <!-- FontAwesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
+
         body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #f4f4f4;
-            overflow: hidden;
-        }
+    margin: 0;
+    padding: 0;
+    margin-top: 100px;
+    /* height: 100vh;  */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f4f4f4;
+}
+
+
 
         /* Animation for background */
         @keyframes backgroundMove {
@@ -35,11 +39,12 @@
 
         .login-container {
             max-width: 400px;
-            width: 100%;
-            padding: 30px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    padding: 30px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
         }
 
         .login-container .form-header {
@@ -124,9 +129,32 @@
 }
 
     </style>
+    <style>
+      footer {
+    width: 100%;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto;
+
+}
+
+
+        footer  a {
+            color: black;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+    padding-right: 30px;
+          }
+
+
+          </style>
 </head>
 <body>
-
+<nav style=" background-color: #f8f9fa;position: relative; top: -100px;width:100%;text-align: center;">
+    <a href="{{ route("home") }}" style=" font-size: 40px;text-decoration: none;color:#000">hellow</a>
+</nav>
 
     <div class="login-container">
         <form method="POST" action="{{ route('login') }}">
@@ -168,7 +196,7 @@
             </div>
 
             <div class="input-group">
-                <button type="submit" class="btn btn-primary w-100">
+                <button style="background-color: #6fa007;color:white" type="submit" class="btn  w-100">
                     <i class="fas fa-sign-in-alt"></i> Login
                 </button>
             </div>
@@ -183,6 +211,24 @@
 <div id="loadingScreen" class="loading-screen" style="display: none;">
     <div class="spinner"></div>
 </div>
+
+
+
+<footer>
+    <div class="container grid">
+
+
+      <div class="box">
+            <a href="#">Company History</a>
+            <a href="#">About Us</a>
+            <a href="{{ route("contact-us") }}">Contact Us</a>
+            <a href="#">Services</a>
+            <a href="#">Privacy Policy</a>
+      </div>
+
+
+    </div>
+  </footer>
 
 
 

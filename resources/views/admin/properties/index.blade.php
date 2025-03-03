@@ -40,6 +40,7 @@
         <thead>
             <tr>
                 <th>Title</th>
+                <th>Propereties Owner</th>
                 <th>Location</th>
                 <th>Price/Day</th>
                 <th>Status</th>
@@ -51,6 +52,7 @@
             @foreach($properties as $property)
                 <tr>
                     <td>{{ $property->title }}</td>
+                    <td>{{ $property->owner->name }}</td>
                     <td>{{ $property->location }}</td>
                     <td>${{ number_format($property->price_per_day, 2) }}</td>
                     <td>
@@ -65,7 +67,7 @@
                         @endforeach
                     </td>
                     <td>
-                        <a href="{{ route('admin.properties.reviews', $property->id) }}" class="btn btn-info btn-sm">View Reviews</a>
+                        <a href="{{ route('admin.properties.reviews', $property->id) }}" class="btn btn-success btn-sm">View Reviews</a>
                     </td>
 
                     <td>
