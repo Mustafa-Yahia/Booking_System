@@ -35,6 +35,7 @@
     </div>
 
 
+    @if(Auth::check())
     <script>
         // Toggle dropdown on button click
         document.querySelector('.dropbtn').addEventListener('click', function(event) {
@@ -59,6 +60,7 @@
             }
         });
     </script>
+    @endif
 
 
   </header>

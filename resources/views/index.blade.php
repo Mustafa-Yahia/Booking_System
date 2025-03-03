@@ -122,7 +122,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h6 class="price text-dark fw-bold mb-0">${{ $property->price_per_day }} <span class="text-muted">/ Night</span></h6>
-                                    <a href="#" class="btn "  style="Background-color: #81c408; color:#fff">Book Now</a>
+                                    <a href="{{route('properties.show', $property->id)}}" class="btn "  style="Background-color: #81c408; color:#fff">Book Now</a>
                                 </div>
                             </div>
                         </div>

@@ -142,8 +142,8 @@ footer ul li a {
                     <div class="footer-links">
                         <a href="{{route('index')}}">Home</a>
                         <a href="#">Contact Us</a>
-                        <a href="{{route('privacy')}}">Terms & Conditions</a>
-                        <a href="{{route('terms')}}">Privacy Policy</a>
+                        <a href="{{route('privacy')}}">Privacy Policy</a>
+                        <a href="{{route('terms')}}">Terms & Conditions</a>
                     </div>
                 </div>
 
