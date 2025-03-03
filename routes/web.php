@@ -20,7 +20,9 @@ use App\Http\Controllers\ContactController;
 |
 */
 
-
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Majd
 
@@ -39,6 +41,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
+// end_Majd
 
 Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', function () {
     return view('admin.dashboard');
@@ -69,7 +72,16 @@ Route::middleware(['auth', 'role:renter'])->get('/renter', [PropertyController::
 
 
 
+
+
+
 //end_Ebrahim
+
+
+
+
+
+
 
 
 
@@ -95,20 +107,35 @@ Route::middleware(['auth', 'role:renter'])->get('/renter', [PropertyController::
 
 // Mohammed
 
+
+
 use App\Http\Controllers\PropertyImageController;
+use App\Http\Controllers\BookingController;
 
-Route::get('/lessor/dashboard', [PropertyController::class, 'dashboard'])->name('lessor.dashboard');
-// Routes for properties
-Route::get('/lessor/properties', [PropertyController::class, 'index'])->name('lessor.properties.index');
-Route::get('/lessor/properties/create', [PropertyController::class, 'create'])->name('lessor.properties.create');
-Route::post('/lessor/properties', [PropertyController::class, 'store'])->name('lessor.properties.store');
-Route::get('/lessor/properties/{property}/edit', [PropertyController::class, 'edit'])->name('lessor.properties.edit');
-Route::put('/lessor/properties/{property}', [PropertyController::class, 'update'])->name('lessor.properties.update');
-Route::get('/lessor/properties/{property}', [PropertyController::class, 'show'])->name('lessor.properties.show');
-Route::delete('/lessor/properties/{property}', [PropertyController::class, 'destroy'])->name('lessor.properties.destroy');
+Route::middleware(['auth', 'role:lessor'])->group(function() {
+    // Lessor Dashboard
+    Route::get('/lessor/dashboard', [PropertyController::class, 'dashboard'])->name('lessor.dashboard');
 
-// Routes for property images
-Route::delete('/lessor/properties/{property}/images/{image}', [PropertyImageController::class, 'destroy'])->name('lessor.property_images.destroy');
+    // Routes for properties
+    Route::get('/lessor/properties', [PropertyController::class, 'index'])->name('lessor.properties.index');
+    Route::get('/lessor/properties/create', [PropertyController::class, 'create'])->name('lessor.properties.create');
+    Route::post('/lessor/properties', [PropertyController::class, 'store'])->name('lessor.properties.store');
+    Route::get('/lessor/properties/{property}/edit', [PropertyController::class, 'edit'])->name('lessor.properties.edit');
+    Route::put('/lessor/properties/{property}', [PropertyController::class, 'update'])->name('lessor.properties.update');
+    Route::get('/lessor/properties/{property}', [PropertyController::class, 'show'])->name('lessor.properties.show');
+    Route::delete('/lessor/properties/{property}', [PropertyController::class, 'destroy'])->name('lessor.properties.destroy');
+
+    // Routes for property images
+    Route::delete('/lessor/properties/{property}/images/{image}', [PropertyImageController::class, 'destroy'])->name('lessor.property_images.destroy');
+
+    // Routes for bookings
+    Route::resource('bookings', BookingController::class);
+    Route::get('lessor/properties/{property}/bookings', [BookingController::class, 'indexForLessor'])->name('lessor.properties.bookings.index');
+    Route::put('bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
+    Route::delete('bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+});
+
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 // End_Mohammed
@@ -116,8 +143,16 @@ Route::delete('/lessor/properties/{property}/images/{image}', [PropertyImageCont
 
 
 
-//Mustafa
-// Mustafa
+
+
+
+
+
+
+
+
+
+
 
 Route::get('/', [PropertyController::class, 'index'])->name('home');
 
@@ -129,6 +164,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('contact-us');
 });
 
+//Mustafa
 
 
 // Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');

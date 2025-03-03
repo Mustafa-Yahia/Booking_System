@@ -14,10 +14,8 @@ class PropertyImageController extends Controller
             return back()->with('error', 'Invalid image for this property');
         }
 
-        // حذف الصورة من التخزين
         Storage::disk('public')->delete($image->image_path);
 
-        // حذف السجل من قاعدة البيانات
         $image->delete();
 
         return back()->with('success', 'Image deleted successfully!');

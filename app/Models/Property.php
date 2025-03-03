@@ -12,7 +12,7 @@ class Property extends Model
 
     protected $fillable = [
         'user_id', 'title', 'description', 'price_per_day',
-        'location', 'status', 'type'
+        'location', 'status', 'type', 'guest_limit'
     ];
 
     public function owner()

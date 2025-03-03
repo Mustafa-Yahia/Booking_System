@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('property_id')->constrained('properties')->onDelete('cascade'); // العقار الذي تم تقييمه
             $table->tinyInteger('rating')->unsigned(); // التقييم من 1 إلى 5
             $table->text('comment')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -25,8 +26,10 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-        Schema::dropIfExists('reviews');
-    }
+    public function down()
+{
+    Schema::table('reviews', function (Blueprint $table) {
+        $table->dropSoftDeletes();
+    });
+}
 };

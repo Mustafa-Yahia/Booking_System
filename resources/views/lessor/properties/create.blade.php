@@ -8,39 +8,46 @@
 </head>
 <body>
     <div class="container py-5">
-        <h2 class="text-center mb-4">Add New Property</h2>
-        <div class="card p-4">
+        <h2 class="text-center mb-5 fw-bold">🏠 Add New Property</h2>
+        <div class="card shadow-sm border-0 rounded-lg p-4">
             <form action="{{ route('lessor.properties.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="mb-3">
-                    <label class="form-label">Property Type</label>
-                    <select name="type" class="form-control" required>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Property Type</label>
+                    <select name="type" class="form-select" required>
                         <option value="apartment">Apartment</option>
                         <option value="house">House</option>
+                        <option value="villa">Villa</option>
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Title</label>
-                    <input type="text" name="title" class="form-control" required>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Title</label>
+                    <input type="text" name="title" class="form-control" placeholder="Enter property title" required>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea name="description" class="form-control" rows="3" required></textarea>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Description</label>
+                    <textarea name="description" class="form-control" rows="3" placeholder="Describe your property" required></textarea>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Location</label>
-                    <input type="text" name="location" class="form-control" required>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Location</label>
+                    <input type="text" name="location" class="form-control" placeholder="City, Neighborhood" required>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Price Per Day ($)</label>
-                    <input type="number" name="price_per_day" class="form-control" required>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Price Per Day ($)</label>
+                    <input type="number" name="price_per_day" class="form-control" placeholder="100" required>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Property Images</label>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Guests Limit</label>
+                    <input type="number" name="guest_limit" class="form-control" min="1" placeholder="1" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Property Images</label>
                     <input type="file" name="images[]" class="form-control" multiple accept="image/jpeg,image/png,image/jpg,image/gif">
                 </div>
-                <button type="submit" class="btn btn-success">Save Property</button>
-                <a href="{{ route('lessor.properties.index') }}" class="btn btn-secondary">Cancel</a>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success px-5">💾 Save Property</button>
+                    <a href="{{ route('lessor.properties.index') }}" class="btn btn-secondary px-5">❌ Cancel</a>
+                </div>
             </form>
         </div>
     </div>
