@@ -8,7 +8,7 @@
             <!-- Heading and description for the content -->
             <div class="heading text-center mb-5">
                 <h2>Real State</h2>
-                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
+                <p> look for a luxury condo, a waterfront villa, or a city-center apartment,</p>
             </div>
 
             <div class="row">
@@ -94,9 +94,19 @@
 
                                     <!-- Property rating -->
                                     <div class="rate d-flex mb-2">
+                                        @php
+                                            $averageRating = $property->reviews->avg('rating'); // Calculate the average rating
+                                        @endphp
+
                                         @for ($i = 0; $i < 5; $i++)
-                                            <i class="fa fa-star text-warning"></i>
+                                            @if ($i < $averageRating)
+                                                <i class="fa fa-star text-warning"></i> <!-- Filled star -->
+                                            @else
+                                                <i class="fa fa-star text-secondary"></i> <!-- Empty star -->
+                                            @endif
                                         @endfor
+
+                                        <p class="ms-2">{{ number_format($averageRating, 1) }} / 5</p> <!-- Display the average rating -->
                                     </div>
 
                                     <!-- Price and booking button -->

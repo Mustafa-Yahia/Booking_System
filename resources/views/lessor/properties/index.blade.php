@@ -19,7 +19,7 @@
             </div>
             <div class="col-md-4">
                 <select name="status" class="form-select">
-                    <option value="" {{ request('status') == '' ? 'selected' : '' }}>All Statuses</option>
+                    <option value="" {{ request('status') == '' ? 'selected' : '' }}>All status</option>
                     <option value="available" {{ request('status') == 'available' ? 'selected' : '' }}>Available</option>
                     <option value="rented" {{ request('status') == 'rented' ? 'selected' : '' }}>Rented</option>
                 </select>

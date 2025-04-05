@@ -3,15 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
-class ContactController extends Controller
-{
-    <?php
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use App\Models\User; 
 class ContactController extends Controller
 {
     public function checkEmail(Request $request)
@@ -21,6 +14,4 @@ class ContactController extends Controller
 
         return response()->json(['exists' => $exists]);
     }
-}
-
 }

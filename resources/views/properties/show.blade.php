@@ -7,7 +7,9 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 @section('content')
-
+@php
+    $allowed = true;
+@endphp
 <p id="property-id" data-id='{{$property->id}}'></p>
 <p id="price" data-id='{{$property->price_per_day}}'></p>
 <section class="property-detail">
@@ -132,7 +134,13 @@
         <input type="hidden" name="property_id" value="{{$property->id}}">
         <textarea name="review" id="review" placeholder="Your review" cols="50" rows="5" class="review-textarea"></textarea>
         <p class="error" id="review-err"></p>
-        <button type="submit" class="primary-btn">Add a Review</button>
+        @if (Auth::check())
+        <?php $allowed = Auth::user()->bookings->where('user_id', Auth::user()->id)->where('property_id', $property->id)->count() > 0 ? true : false ?>
+
+        @endif
+        <p class="error me-2">{{ $allowed ? "" : "You can't review unless you book this property"}}</p>
+        <button type="submit" class="primary-btn" {{$allowed ? '' : 'disabled'}}>Add a Review</button>
+
     </form>
     {{-- @endif --}}
 

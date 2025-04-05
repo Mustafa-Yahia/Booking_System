@@ -148,7 +148,7 @@ async function checkAvailability(event) {
             Swal.fire({
                 icon: "error",
                 title: "Unavailable",
-                text: "The selected date are alrady booked, please choose another date",
+                text: "The selected date are already booked, please choose another date",
               });
             return false;
         }
