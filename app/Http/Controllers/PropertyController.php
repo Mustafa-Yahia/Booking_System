@@ -83,6 +83,7 @@ public function index(Request $request)
         $properties = $query->get();
         return view('lessor.properties.index', compact('properties'));
         }
+        // here if the user is not a lessor
         $properties = Property::all();
         return view('index', compact('properties'));
     }
@@ -116,6 +117,7 @@ public function index(Request $request)
 
     public function store(Request $request)
     {
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -156,8 +158,9 @@ public function index(Request $request)
         return view('lessor.properties.show', compact('property'));
     }
     $reviews = Review::where('property_id', $property->id)
-    ->orderByDesc('created_at')
-    ->paginate(6);    $images = Property::find($property->id)->images;
+    ->orderBy('created_at', 'desc') // latest reviews first you can use 'asc' for oldest
+    ->paginate(6);
+    $images = Property::find($property->id)->images;
     $property = Property::find($property->id);
     return view('properties.show', compact('property', 'images', 'reviews'));
 }

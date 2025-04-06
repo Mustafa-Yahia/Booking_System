@@ -26,8 +26,13 @@
             @endif
 
             @guest
-                <li><a href="{{ route('login') }}" class="primary-btn">Login</a></li>
-                <li><a href="{{ route('register') }}" class="primary-btn">Sign Up</a></li>
+                @if(request()->path() != "login")
+                    <li><a href="{{ route('login') }}" class="primary-btn">Log in</a></li>
+                @endif
+
+                @if(request()->path() != "register")
+                    <li><a href="{{ route('register') }}" class="primary-btn">Sign Up</a></li>
+                @endif
             @endguest
         </ul>
         <span class="fa fa-bars" onclick="menutoggle()"></span>
