@@ -33,51 +33,44 @@ class BookingController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+{
+    $validatedData = $request->validate([
+        'property_id' => 'required|integer',
+        'user_id' => 'required|string',
+        'start_date' => 'required|date_format:Y-m-d',
+        'end_date' => 'required|date_format:Y-m-d|after:start_date',
+        'total' => 'required|numeric'
+    ]);
 
-        $validatedData = $request->validate([
-            'property_id' => 'required|integer',
-            'user_id' => 'required|string',
-            'start_date' => 'required|date_format:Y-m-d',
-            'end_date' => 'required|date_format:Y-m-d|after:start_date',
-            'total' => 'required|numeric'
-        ]);
+    $booking = Booking::create([
+        'user_id' => $request->user_id,
+        'property_id' => $request->property_id,
+        'start_date' => $request->start_date,
+        'end_date' => $request->end_date,
+        'status' => 'pending',
+        'total' => $request->total,
+    ]);
 
-        // $datetime1 = new DateTime($request->start_date);
-        // $datetime2 = new DateTime($request->end_date);
-        // $days = $datetime1->diff($datetime2)->format('%a');
+    $booking_id = $booking->id;
 
+    Payment::create([
+        'user_id' => $request->user_id,
+        "booking_id" => $booking_id,
+        'amount' => $request->total,
+        'payment_method' => 'visa',
+        'status' => 'completed'
+    ]);
 
-        $booking = Booking::create([
-            'user_id' => $request->user_id,
-            'property_id' => $request->property_id,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'status' => 'pending',
-            'total' => $request->total,
+    // ✅ إرجاع booking_id للـ JavaScript لكي يتم تخزينه
+    return response()->json([
+        'success' => true,
+        'message' => 'Booking processed successfully',
+        'data' => $validatedData,
+        'booking_id' => $booking_id,
+        'payment_status' => 'completed'
+    ], 200);
+}
 
-        ]);
-
-        $booking_id = $booking->id;
-        Payment::create([
-            'user_id' => $request->user_id,
-            "booking_id" => $booking_id,
-            'amount' => $request->total,
-            'payment_method' => 'visa',
-            'status' => 'completed'
-        ]);
-
-
-        // Process payment logic here
-        // Return JSON response
-        return response()->json([
-            'success' => true,
-            'message' => 'Booking processed successfully',
-            'data' => $validatedData,
-            'payment_status' => 'completed'
-        ], 200);
-
-    }
 
     /**
      * Display the specified resource.

@@ -1,3 +1,5 @@
+
+
 @extends('layouts.app')
 
 @section('title', 'Our Rooms')
@@ -61,6 +63,9 @@
                         </form>
                     </div>
                 </div>
+                @php
+                use Illuminate\Support\Str;
+            @endphp
 
 
                 <div class="col-md-9 mb-4">
@@ -128,9 +133,11 @@
                                 </div>
                             </div>
                         </div>
-                        @endforeach
                     </div>
+                    @endforeach
                 </div>
+            </div>
+
 
             </div>
         </div>

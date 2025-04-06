@@ -44,6 +44,13 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+Route::post('/properties/favorite/{property}', [PropertyController::class, 'toggleFavorite'])->middleware('auth');
+Route::get('/properties/favorites', [PropertyController::class, 'showFavorites'])->name('renter.favorites')->middleware('auth');
+Route::post('/properties/favorite/{id}', [PropertyController::class, 'toggleFavorite'])
+     ->name('properties.favorite')
+     ->middleware('auth'); // تأكد من أن المستخدم مسجل دخول
+
+
 // end_Majd
 
 Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', function () {
@@ -191,6 +198,20 @@ Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRe
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/check-email', [ContactController::class, 'checkEmail']);
 
+<<<<<<< HEAD
+=======
+Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('process.pyment');
 
+// Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
+>>>>>>> main
 
+Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
 //Mustafa
+
+
+Route::get('/test-notifications', function () {
+    return dd(Auth::user()->notifications->toArray());
+});
+
+Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::post('/payment/store', [PaymentController::class, 'store'])->name('payment.store');
