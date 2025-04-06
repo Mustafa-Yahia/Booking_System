@@ -158,7 +158,7 @@ Route::get('/', [PropertyController::class, 'index'])->name('index');
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('real-state', [PropertyController::class, 'realState'])->name('properties.index'); // صفحة Real State مع الفلترة
+    Route::get('real-state', [PropertyController::class, 'realState'])->name('properties.index'); 
     Route::get('contact-us', function () {
         return view('renter.contactus');
     })->name('contact-us');
@@ -191,10 +191,6 @@ Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRe
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/check-email', [ContactController::class, 'checkEmail']);
 
-// Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('properties.filter');
-// Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('filterProperties');
-
-// Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 
 
 //Mustafa

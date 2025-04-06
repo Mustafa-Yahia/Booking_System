@@ -22,6 +22,16 @@
                 <label class="form-label">Confirm New Password</label>
                 <input type="password" class="form-control" placeholder="Confirm new password" name="password_confirmation">
             </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <button type="submit" class="btn btn-primary w-100">Update Password</button>
         </form>
     </div>
