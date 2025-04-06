@@ -155,8 +155,9 @@ public function index(Request $request)
         $property = Property::with(['images', 'reviews.user'])->findOrFail($property->id);
         return view('lessor.properties.show', compact('property'));
     }
-    $reviews = Review::where('property_id', $property->id)->paginate(6);
-    $images = Property::find($property->id)->images;
+    $reviews = Review::where('property_id', $property->id)
+    ->orderByDesc('created_at')
+    ->paginate(6);    $images = Property::find($property->id)->images;
     $property = Property::find($property->id);
     return view('properties.show', compact('property', 'images', 'reviews'));
 }
@@ -208,5 +209,49 @@ public function edit(Property $property)
         $property->delete();
         return redirect()->route('lessor.properties.index')->with('success', 'Property deleted successfully!');
     }
+
+
+    public function toggleFavorite(Request $request, $id)
+    {
+        try {
+            if (!auth()->check()) {
+                return response()->json(['error' => 'يجب تسجيل الدخول'], 401);
+            }
+
+            $user = auth()->user();
+            $property = Property::find($id);
+
+            if (!$property) {
+                \Log::error("Property not found: $id");
+                return response()->json(['error' => 'العقار غير موجود'], 404);
+            }
+
+            if ($user->favorites()->where('property_id', $id)->exists()) {
+                $user->favorites()->detach($id);
+                $isFavorite = false;
+            } else {
+                $user->favorites()->attach($id);
+                $isFavorite = true;
+            }
+
+            return response()->json(['is_favorite' => $isFavorite]);
+
+        } catch (\Exception $e) {
+            \Log::error('Favorite Error: ' . $e->getMessage());
+            return response()->json(['error' => 'حدث خطأ أثناء العملية'], 500);
+        }
+    }
+
+public function showFavorites()
+{
+    $user = auth()->user();
+    // جلب العقارات المفضلة للمستخدم
+    $properties = $user->favorites;
+
+    return view('renter.favorites', compact('properties'));
+}
+
+
+
 
 }

@@ -37,8 +37,11 @@ class Property extends Model
 
     public function favorites()
     {
-        return $this->hasMany(Favorite::class, 'property_id');
+        return $this->belongsToMany(Property::class, 'favorites', 'user_id', 'property_id');
     }
 
+
     protected $dates = ['deleted_at'];
+
+
 }

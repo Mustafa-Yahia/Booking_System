@@ -1,17 +1,17 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("paymentForm");
 
     form.addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault(); // منع الإرسال الافتراضي للنموذج
 
         if (!validateForm()) {
             return;
         }
+
         let stored = localStorage.getItem("bookingData");
         let data = JSON.parse(stored);
 
-        // Ensure all localStorage data is present
+        // ✅ التحقق من وجود البيانات في localStorage
         if (!data || !data.property_id || !data.user_id || !data.start_date || !data.end_date) {
             Swal.fire({
                 icon: "error",
@@ -21,25 +21,22 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
-
-
-
-        // console.log(data);
-        // Send payment and booking data to Laravel
+        // ✅ إرسال بيانات الحجز والدفع إلى Laravel
         fetch("/booking", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
             },
-            body: JSON.stringify(data), // Send localStorage booking data
-
+            body: JSON.stringify(data),
         })
         .then(response => response.json())
         .then(responseData => {
-            if(responseData.success) {
-                localStorage.removeItem("bookingData"); // Clear stored booking data
+            if (responseData.success) {
+                localStorage.removeItem("bookingData"); // حذف بيانات الحجز من التخزين المحلي
+
+                // ✅ إرسال إشعار بعد نجاح الدفع
+                sendNotification(data.user_id, "Your booking has been confirmed!");
 
                 Swal.fire({
                     icon: "success",
@@ -49,22 +46,43 @@ document.addEventListener("DOMContentLoaded", function () {
                     timer: 2000,
                 });
 
-                   // Redirect after 2 seconds
-                   setTimeout(() => {
+                // ✅ إعادة التوجيه بعد 2 ثانية
+                setTimeout(() => {
                     window.location.href = "/properties";
                 }, 2000);
             }
         })
-        // .then(data => console.log("Success:", data))
-        // .catch(error => console.error("Error:", error));
-        // event.target.submit();
+        .catch(error => {
+            console.error("Error:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Server Error",
+                text: "Could not connect to the server. Please try again later.",
+            });
+        });
     });
-
-
 });
 
+function sendNotification(userId, title, message) {
+    fetch("/send-notification", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+        },
+        body: JSON.stringify({
+            user_id: userId,
+            title: title,
+            message: message
+        }),
+    })
+    .then(response => response.json())
+    .then(data => console.log("Notification sent:", data))
+    .catch(error => console.error("Notification Error:", error));
+}
 
 
+// ✅ دالة التحقق من صحة البيانات
 function validateForm() {
     let name = document.getElementById('name').value.trim();
     let expiry = document.getElementById('expiry').value.trim();
@@ -72,24 +90,22 @@ function validateForm() {
     let cardNumber = document.getElementById('cardNumber').value.replace(/\s+/g, '');
 
     if (!name || !cardNumber || !expiry || !cvv) {
-        errorMessage.textContent = "All fields are required!";
-        errorMessage.style.display = 'block';
+        Swal.fire({ icon: "error", title: "Validation Error", text: "All fields are required!" });
         return false;
     }
 
-
     if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) {
-        exErr.innerHTML = "Invalid expiry date (MM/YY).";
+        Swal.fire({ icon: "error", title: "Validation Error", text: "Invalid expiry date (MM/YY)." });
         return false;
     }
 
     if (!/^\d{3}$/.test(cvv)) {
-        cvvErr.innerHTML = "Invalid CVV.";
+        Swal.fire({ icon: "error", title: "Validation Error", text: "Invalid CVV." });
         return false;
     }
 
     if (!/^\d{16}$/.test(cardNumber)) {
-        cardErr.innerHTML = "Invalid card number!";
+        Swal.fire({ icon: "error", title: "Validation Error", text: "Invalid card number!" });
         return false;
     }
 
