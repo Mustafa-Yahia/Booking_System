@@ -4,9 +4,7 @@
 <link rel="stylesheet" href="{{asset('css/profile.css')}}">
 @section('content')
 <div class="profile-container">
-  <div class="profile-header">
-    <h1>{{ucfirst(Auth::user()->name)}} Profile</h1>
-  </div>
+
 
   <div class="profile-content">
     <div class="profile-sidebar">

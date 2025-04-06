@@ -158,7 +158,7 @@ public function index(Request $request)
         return view('lessor.properties.show', compact('property'));
     }
     $reviews = Review::where('property_id', $property->id)
-    ->orderBy('created_at', 'desc')
+    ->orderBy('created_at', 'desc') // latest reviews first you can use 'asc' for oldest
     ->paginate(6);
     $images = Property::find($property->id)->images;
     $property = Property::find($property->id);

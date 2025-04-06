@@ -188,6 +188,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/notifications', [NotificationController::class, 'fetchNotifications'])->name('notifications.fetch');
 Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/check-email', [ContactController::class, 'checkEmail']);
 
 // Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('properties.filter');

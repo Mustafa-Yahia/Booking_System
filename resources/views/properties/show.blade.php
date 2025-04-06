@@ -14,7 +14,7 @@
 <p id="price" data-id='{{$property->price_per_day}}'></p>
 <section class="property-detail">
     <div class="container">
-        <!-- Property Images (Grid Layout) -->
+        <!-- Property Images  -->
         <div class="property-images">
             @if ($images->count() > 0)
                 <div class="image-grid">
@@ -89,6 +89,9 @@
 
     {{-- displays reviews --}}
     <div class="reviews-section">
+
+        @if($reviews->count() > 0)
+        <h2 class="text-center">Reviews</h2>
         <div class="reviews">
             @foreach ($reviews as $review)
             <div class="card">
@@ -114,6 +117,9 @@
     <div class="pagination">
         {{ $reviews->links('pagination::simple-bootstrap-4') }}
     </div>
+    @else
+        <h2 class="text-center">No reviews yet</h2>
+    @endif
 
     {{-- add a review only for renters --}}
     {{-- @if(Auth::check() && Auth::user()->role == 'renter') --}}
