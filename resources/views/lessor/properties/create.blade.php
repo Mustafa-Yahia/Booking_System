@@ -1,23 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Property</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container py-5">
+@extends('layouts.lessor')
+
+@section('title', 'Add new Property')
+
+@section('content')
+    <div class="container py-5 mt-4" style="margin-left: 250px;">
         <h2 class="text-center mb-5 fw-bold">🏠 Add New Property</h2>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
         <div class="card shadow-sm border-0 rounded-lg p-4">
             <form action="{{ route('lessor.properties.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
                     <label class="form-label fw-bold">Property Type</label>
                     <select name="type" class="form-select" required>
-                        <option value="apartment">Apartment</option>
-                        <option value="house">House</option>
-                        <option value="villa">Villa</option>
+                        <option value="Apartment">Apartment</option>
+                        <option value="House">House</option>
+                        <option value="Villa">Villa</option>
+                        <option value="studio">Studio</option>
+                        <option value="other">Other</option>
+
                     </select>
                 </div>
                 <div class="mb-4">
@@ -51,5 +59,6 @@
             </form>
         </div>
     </div>
-</body>
-</html>
+
+    <img src="{{ asset('storage/images/index/cabin.jpg') }}" alt="" class="w-50 h-50 position-absolute top-50 end-0" style="z-index: -1; ">
+

@@ -54,19 +54,12 @@ Route::middleware(['auth', 'role:lessor'])->get('/lessor/dashboard', function ()
     return view('lessor.dashboard');
 })->name('lessor.dashboard');
 
-Route::middleware(['auth', 'role:renter'])->get('/renter', [PropertyController::class, 'index'])->name('index');
-
-
-
+Route::middleware(['aut h', 'role:renter'])->get('/renter', [PropertyController::class, 'index'])->name('index');
 
 // end_Majd
 
 
-
 //Ebrahim
-
-
-
 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -130,13 +123,7 @@ Route::resource("payment", PaymentController::class)->middleware('auth');
 
 // End_Ghassan
 
-
-
-
 // Mohammed
-
-
-
 
 Route::middleware(['auth', 'role:lessor'])->group(function() {
     // Lessor Dashboard
@@ -165,19 +152,6 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 // End_Mohammed
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 Route::get('/', [PropertyController::class, 'index'])->name('index');
@@ -214,6 +188,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/notifications', [NotificationController::class, 'fetchNotifications'])->name('notifications.fetch');
 Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/check-email', [ContactController::class, 'checkEmail']);
 
 // Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('properties.filter');

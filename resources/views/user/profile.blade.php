@@ -2,11 +2,18 @@
 
 @section('main')
 <div class="container">
-    <h2>Your Bookings</h2>
-
+    <div class="profile-header mt-n5 mb-4">
+        <h1>{{ucfirst(Auth::user()->name)}} Profile</h1>
+      </div>
     @if($bookings->isEmpty())
-        <p>You have no bookings at the moment.</p>
+    <div class="text-center">
+
+        <h2 >My Bookings</h2>
+        <p >You have no bookings at the moment.</p>
+    </div>
     @else
+    <h2 >My Bookings</h2>
+
         <table class="table">
             <thead>
                 <tr>
@@ -20,7 +27,7 @@
             <tbody>
                 @foreach($bookings as $booking)
                     <tr>
-                        <td>{{ $booking->property->title }}</td> 
+                        <td>{{ $booking->property->title }}</td>
                         <td>{{ $booking->start_date}}</td>
                         <td>{{ $booking->end_date }}</td>
                         <td>
