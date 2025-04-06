@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -73,13 +74,21 @@ class UserController extends Controller
        if($request->has('password')) {
 
             $fields = $request->validate([
+                'current_password' => 'required|string',
                 'password' => 'required|string|confirmed|min:6',
             ]);
+            if ($request->password !== $request->password_confirmation) {
+                return back()->withErrors(['password' => 'The password confirmation does not match.']);
+            }
+            if (!Hash::check($request->current_password, Auth::user()->password)) {
+                return back()->withErrors(['current_password' => 'The current password is incorrect.']);
+            }
 
             $user->update([
                 'password' => bcrypt($request->password)
             ]);
-            return redirect()->route('profile');
+
+            return redirect()->route('profile')->with('success', 'Password updated successfully.');
 
 
         }

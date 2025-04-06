@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
 {
-    // عرض صفحة طلب إعادة تعيين كلمة المرور
+
     public function showLinkRequestForm()
     {
         return view('auth.forgetpassword');
     }
 
-    // إرسال رابط إعادة تعيين كلمة المرور
+   
     public function sendResetLink(Request $request)
     {
         $request->validate(['email' => 'required|email|exists:users,email']);

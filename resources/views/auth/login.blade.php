@@ -32,11 +32,6 @@
 
             <!-- Forgot Password & Remember Me in the same row -->
             <div class="d-flex justify-content-between mb-3">
-                <!-- Remember Me Checkbox -->
-                <div class="form-check">
-                    <input name="remember" type="checkbox" class="form-check-input" id="remember">
-                    <label class="form-check-label" for="remember" style="color: #000;">Remember Me</label>
-                </div>
 
                 <!-- Forgot Password Link -->
                 <div>
