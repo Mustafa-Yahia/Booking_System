@@ -12,7 +12,7 @@ class Property extends Model
 
     protected $fillable = [
         'user_id', 'title', 'description', 'price_per_day',
-        'location', 'status', 'type'
+        'location', 'status', 'type', 'guest_limit'
     ];
 
     public function owner()
@@ -37,8 +37,11 @@ class Property extends Model
 
     public function favorites()
     {
-        return $this->hasMany(Favorite::class, 'property_id');
+        return $this->belongsToMany(Property::class, 'favorites', 'user_id', 'property_id');
     }
 
+
     protected $dates = ['deleted_at'];
+
+
 }

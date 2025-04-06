@@ -1,17 +1,24 @@
 <?php
 
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\RenterController;
 // use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\LessorController;
-use App\Http\Controllers\RenterController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\auth\ForgotPasswordController;
+use App\Http\Controllers\auth\ResetPasswordController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FilterController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserController;
+use App\Models\Payment;
+use App\Http\Controllers\PropertyImageController;
+
 
 
 /*
@@ -25,11 +32,7 @@ use App\Http\Controllers\FilterController;
 |
 */
 
-
-
 // Majd
-
-
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -41,9 +44,14 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+Route::post('/properties/favorite/{property}', [PropertyController::class, 'toggleFavorite'])->middleware('auth');
+Route::get('/properties/favorites', [PropertyController::class, 'showFavorites'])->name('renter.favorites')->middleware('auth');
+Route::post('/properties/favorite/{id}', [PropertyController::class, 'toggleFavorite'])
+     ->name('properties.favorite')
+     ->middleware('auth'); // تأكد من أن المستخدم مسجل دخول
 
 
-
+// end_Majd
 
 Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', function () {
     return view('admin.dashboard');
@@ -53,19 +61,12 @@ Route::middleware(['auth', 'role:lessor'])->get('/lessor/dashboard', function ()
     return view('lessor.dashboard');
 })->name('lessor.dashboard');
 
-Route::middleware(['auth', 'role:renter'])->get('/renter', [PropertyController::class, 'index'])->name('index');
-
-
-
+Route::middleware(['aut h', 'role:renter'])->get('/renter', [PropertyController::class, 'index'])->name('index');
 
 // end_Majd
 
 
-
 //Ebrahim
-
-
-
 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -104,63 +105,63 @@ Route::delete('/admin/reviews/{review}', [AdminController::class, 'destroyRevie'
 });
 
 
-
-
-
-
-
-
 //end_Ebrahim
-
-
-
 
 
 // Ghassan
 
+Route::Resource('renter', RenterController::class);
 
+Route::resource('properties', PropertyController::class);
 
+Route::Resource('booking', BookingController::class);
 
+Route::resource('reviews', ReviewController::class);
 
+Route::resource('profile', UserController::class);
+Route::get('user/profile', [UserController::class, 'profile'])->name('profile');
+Route::get('/profile/edit/{id}/{ref?}', [UserController::class, 'edit'])->name('profile.edit');
 
+Route::view('/privacy-policy', 'legal.privacy')->name('privacy');
+Route::view('/terms-conditions', 'legal.terms')->name('terms');
 
-
-
-
+Route::resource("payment", PaymentController::class)->middleware('auth');
 
 
 // End_Ghassan
 
-
-
-
 // Mohammed
 
-use App\Http\Controllers\PropertyImageController;
+Route::middleware(['auth', 'role:lessor'])->group(function() {
+    // Lessor Dashboard
+    Route::get('/lessor/dashboard', [PropertyController::class, 'dashboard'])->name('lessor.dashboard');
 
-Route::get('/lessor/dashboard', [PropertyController::class, 'dashboard'])->name('lessor.dashboard');
-// Routes for properties
-Route::get('/lessor/properties', [PropertyController::class, 'index'])->name('lessor.properties.index');
-Route::get('/lessor/properties/create', [PropertyController::class, 'create'])->name('lessor.properties.create');
-Route::post('/lessor/properties', [PropertyController::class, 'store'])->name('lessor.properties.store');
-Route::get('/lessor/properties/{property}/edit', [PropertyController::class, 'edit'])->name('lessor.properties.edit');
-Route::put('/lessor/properties/{property}', [PropertyController::class, 'update'])->name('lessor.properties.update');
-Route::get('/lessor/properties/{property}', [PropertyController::class, 'show'])->name('lessor.properties.show');
-Route::delete('/lessor/properties/{property}', [PropertyController::class, 'destroy'])->name('lessor.properties.destroy');
+    // Routes for properties
+    Route::get('/lessor/properties', [PropertyController::class, 'index'])->name('lessor.properties.index');
+    Route::get('/lessor/properties/create', [PropertyController::class, 'create'])->name('lessor.properties.create');
+    Route::post('/lessor/properties', [PropertyController::class, 'store'])->name('lessor.properties.store');
+    Route::get('/lessor/properties/{property}/edit', [PropertyController::class, 'edit'])->name('lessor.properties.edit');
+    Route::put('/lessor/properties/{property}', [PropertyController::class, 'update'])->name('lessor.properties.update');
+    Route::get('/lessor/properties/{property}', [PropertyController::class, 'show'])->name('lessor.properties.show');
+    Route::delete('/lessor/properties/{property}', [PropertyController::class, 'destroy'])->name('lessor.properties.destroy');
 
-// Routes for property images
-Route::delete('/lessor/properties/{property}/images/{image}', [PropertyImageController::class, 'destroy'])->name('lessor.property_images.destroy');
+    // Routes for property images
+    Route::delete('/lessor/properties/{property}/images/{image}', [PropertyImageController::class, 'destroy'])->name('lessor.property_images.destroy');
+
+    // Routes for bookings
+    Route::resource('bookings', BookingController::class);
+    Route::get('lessor/properties/{property}/bookings', [BookingController::class, 'indexForLessor'])->name('lessor.properties.bookings.index');
+    Route::put('bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
+    Route::delete('bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+});
+
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 // End_Mohammed
 
 
-
-
-//Mustafa
-// Mustafa
-
-Route::get('/', [PropertyController::class, 'index'])->name('home');
+Route::get('/', [PropertyController::class, 'index'])->name('index');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -170,6 +171,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('contact-us');
 });
 
+//Mustafa
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.email');
@@ -193,10 +195,20 @@ Route::middleware('auth')->group(function () {
 Route::get('/notifications', [NotificationController::class, 'fetchNotifications'])->name('notifications.fetch');
 Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 
-// Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('properties.filter');
-// Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('filterProperties');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/check-email', [ContactController::class, 'checkEmail']);
+
+Route::get('/properties/filter', [FilterController::class, 'filterProperties'])->name('process.pyment');
 
 // Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 
-
+Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
 //Mustafa
+
+
+Route::get('/test-notifications', function () {
+    return dd(Auth::user()->notifications->toArray());
+});
+
+Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::post('/payment/store', [PaymentController::class, 'store'])->name('payment.store');

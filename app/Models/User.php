@@ -13,7 +13,7 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'phone', 'address'
+        'name', 'email', 'password', 'role', 'phone', 'address', 'image'
     ];
 
     protected $hidden = [
@@ -39,4 +39,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Favorite::class, 'user_id');
     }
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
+    }
+
 }

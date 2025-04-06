@@ -37,18 +37,18 @@ class Booking extends Model
 
 
     // ------------------------------------
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::created(function ($booking) {
-            Notification::create([
-                'user_id' => $booking->user_id,
-                'title'   => 'New Booking!',
-                'message' => "Your booking for property ID {$booking->property_id} has been confirmed.",
-            ]);
-        });
-    }
+    //     static::created(function ($booking) {
+    //         Notification::create([
+    //             'user_id' => $booking->user_id,
+    //             'title'   => 'New Booking!',
+    //             'message' => "Your booking for property ID {$booking->property_id} has been confirmed.",
+    //         ]);
+    //     });
+    // }
     // ----------------------------------------
 }
 

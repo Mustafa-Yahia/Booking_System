@@ -20,7 +20,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -28,7 +28,19 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'stars' => 'required',
+            'review' => 'required'
+        ]);
+
+        Review::create([
+            'user_id' => $request->user_id,
+            'property_id' => $request->property_id,
+            'rating' => $request->stars,
+            'comment' => $request->review
+        ]);
+
+        return redirect()->route('properties.show', $request->property_id);
     }
 
     /**

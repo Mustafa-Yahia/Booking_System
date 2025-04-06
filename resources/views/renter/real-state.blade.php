@@ -10,7 +10,7 @@
             <!-- Heading and description for the content -->
             <div class="heading text-center mb-5">
                 <h2>Real State</h2>
-                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
+                <p> look for a luxury condo, a waterfront villa, or a city-center apartment,</p>
             </div>
 
             <div class="row">
@@ -31,7 +31,7 @@
                             </div>
 
                             <!-- Location filter -->
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <select name="location" class="form-select">
                                     <option value="">Select Location</option>
                                     <option value="city1">City 1</option>
@@ -50,8 +50,16 @@
                                 </select>
                             </div>
 
+                            <!-- Amenities filter -->
+                            <div class="mb-3">
+                                <label class="form-check-label">Amenities</label><br>
+                                <!-- Amenities checkboxes -->
+
+
+                            </div> --}}
+
                             <!-- Apply Filters button -->
-                            <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                            <button type="submit" class="btn  w-100" style="background-color: #7fc142; color: #fff" >Apply Filters</button>
                         </form>
                     </div>
                 </div>
@@ -59,64 +67,69 @@
                 use Illuminate\Support\Str;
             @endphp
 
-            <div class="col-md-9 mb-4">
-                <div class="row">
-                    <!-- Loop through each property and display details -->
-                    @foreach($properties as $property)
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm border-0 rounded-3" style="width: 100%; height: 100%; display: flex; flex-direction: column; cursor: pointer;">
-                            <!-- Property image -->
-                            <div class="image">
-                                <img src="{{ asset('storage/' . $property->images->first()->image_path) }}"
-                                     class="card-img-top rounded-top"
-                                     alt="{{ $property->title }}"
-                                     style="height: 150px; object-fit: contain;">
-                            </div>
 
-                            <div class="card-body d-flex flex-column justify-content-between p-3">
-                                <!-- Property title -->
-                                <h5 class="card-title text-primary fw-bold text-center" style="font-size: 1.25rem;">
-                                    {{ $property->title }}
-                                </h5>
-
-                                <!-- Property location, status, and type -->
-                                <p class="mb-1"><i class="fa fa-map-marker-alt" style="color: #000"></i>
-                                    <span class="fw-bold">Location:</span> {{ $property->location }}
-                                </p>
-                                <p class="mb-1">
-                                    <i class="fa fa-info-circle"></i>
-                                    <span class="fw-bold">Status:</span>
-                                    <span class="badge {{ strtolower($property->status) == 'available' ? 'bg-success' : 'bg-danger' }}">
-                                        {{ ucfirst($property->status) }}
-                                    </span>
-                                </p>
-                                <p class="mb-1"><i class="fa fa-home" style="color:#000"></i>
-                                    <span class="fw-bold">Type:</span> {{ $property->type }}
-                                </p>
-
-                                <!-- Property rating -->
-                                <div class="rate d-flex mb-2">
-                                    @for ($i = 0; $i < 5; $i++)
-                                        <i class="fa fa-star text-warning"></i>
-                                    @endfor
+                <div class="col-md-9 mb-4">
+                    <div class="row">
+                        <!-- Loop through each property and display details -->
+                        @foreach($properties as $property)
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm border-0 rounded-3" style="width: 100%; height: 100%; display: flex; flex-direction: column; cursor: pointer;">
+                                <!-- Property image -->
+                                <div class="image">
+                                    @if($property->images->isNotEmpty())
+                                    <img src="{{ asset('storage/' . $property->images->first()->image_path) }}" class="card-img-top" alt="{{ $property->title }}" style="object-fit: cover; height: 250px;">
+                                    @endif
                                 </div>
 
-                                <!-- Property description (excluding first 20 words) -->
-                                @php
-                                    $first_20_words = Str::words($property->description, 20, '');
-                                    $remaining_description = Str::replaceFirst($first_20_words, '', $property->description);
-                                @endphp
+                                <div class="card-body d-flex flex-column justify-content-between p-3">
+                                    <!-- Property title -->
+                                    <h5 class="card-title fw-bold text-center" style="font-size: 1.25rem;">{{ $property->title }}</h5>
 
-                                <p class="card-text" style="font-size: 0.875rem; color: #555; flex-grow: 1; margin-bottom: 1rem;">
-                                    {{ trim($remaining_description) }}
-                                </p>
+                                    <!-- Property details (Location, Status, Type) -->
+                                    <div class="mb-2">
+                                        <p class="mb-1"><i class="fa fa-map-marker-alt text-dark"></i> <span class="fw-bold">Location:</span> {{ $property->location }}</p>
+                                        <p class="mb-1"><i class="fa fa-home text-dark"></i> <span class="fw-bold">Type:</span> {{ $property->type }}</p>
+                                        <p class="mb-1">
+                                            <i class="fa fa-info-circle"></i> <span class="fw-bold">Status:</span>
+                                            <span class="badge {{ strtolower($property->status) == 'available' ? 'bg-success' : 'bg-danger' }}">
+                                                {{ ucfirst($property->status) }}
+                                            </span>
+                                        </p>
+                                    </div>
 
-                                <!-- Price and booking button -->
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <a href="" class="btn" style="background-color: #7fc142; color: white;">Book Now</a>
-                                    <h6 class="price text-dark fw-bold mb-0">${{ $property->price_per_day }}
-                                        <span class="text-muted">/ Night</span>
-                                    </h6>
+                                    <!-- Property rating -->
+                                    <div class="rate d-flex mb-2">
+                                        @php
+                                            $averageRating = $property->reviews->avg('rating'); // Calculate the average rating
+                                        @endphp
+
+                                        @for ($i = 0; $i < 5; $i++)
+                                            @if ($i < $averageRating)
+                                                <i class="fa fa-star text-warning"></i> <!-- Filled star -->
+                                            @else
+                                                <i class="fa fa-star text-secondary"></i> <!-- Empty star -->
+                                            @endif
+                                        @endfor
+
+                                        <p class="ms-2">{{ number_format($averageRating, 1) }} / 5</p> <!-- Display the average rating -->
+                                    </div>
+
+                                    <!-- Price and booking button -->
+                                    <div class="d-flex justify-content-between align-items-center gap-3">
+                                        <!-- Book Now button -->
+                                        <a href="{{ route('properties.show', $property->id) }}"
+                                            class="btn flex-grow-1"
+                                            style="font-size: 0.875rem; padding: 0.5rem 0.3rem; background-color: #81c408; color: white;">
+                                            Book Now
+                                         </a>
+
+
+                                        <!-- Price per night -->
+                                        <h3 class="price text-end" style="font-size: 1rem; font-weight: bold; margin: 0; white-space: nowrap; min-width: 80px;">
+                                            {{ $property->price_per_day }} JOD
+                                            <span class="text-muted" style="font-size: 0.875rem; margin-left: 5px;">\Night</span>
+                                        </h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 <?php
 
-<?php
+
 
 namespace App\Http\Controllers;
 
@@ -20,7 +20,26 @@ class NotificationController extends Controller
         return response()->json($notifications);
     }
 
-    // تعيين الإشعار كمقروء
+    public function send(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|integer',
+            'title' => 'required|string',
+            'message' => 'required|string'
+        ]);
+
+        Notification::create([
+            'user_id' => $request->user_id,
+            'title' => $request->title,
+            'message' => $request->message,
+            'is_read' => false,
+            'read_at' => null,
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Notification sent successfully']);
+    }
+}
+
     public function markAsRead($id)
     {
         $notification = Notification::where('id', $id)
@@ -32,7 +51,6 @@ class NotificationController extends Controller
         return response()->json(['message' => 'Notification marked as read']);
     }
 
-    // إنشاء إشعار جديد
     public function store(Request $request)
     {
         $request->validate([
@@ -50,7 +68,6 @@ class NotificationController extends Controller
         return response()->json(['message' => 'Notification created successfully']);
     }
 
-    // حذف إشعار
     public function destroy($id)
     {
         $notification = Notification::where('id', $id)

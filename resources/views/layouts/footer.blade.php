@@ -1,4 +1,4 @@
-
+{{--
 <style>
 footer ul li a {
     color: #fff;
@@ -28,10 +28,7 @@ footer ul li a {
       <div class="box">
         <h2>Links</h2>
         <ul>
-          <li><a href="#">Company History</a></li>
-          <li><a href="#">About Us</a></li>
           <li><a href="#">Contact Us</a></li>
-          <li><a href="#">Services</a></li>
           <li><a href="#">Privacy Policy</a></li>
         </ul>
       </div>
@@ -49,7 +46,119 @@ footer ul li a {
     </div>
   </footer>
 
-  <!-- الجزء السفلي للحقوق -->
-  <div class="container">
+  <div class="containser">
     <p>&copy; 2025 Modern Apartments in Jordan. All rights reserved.</p>
-  </div>
+  </div> --}}
+
+  <style>
+    /* Footer Styles */
+    .footer {
+        background: #282834;
+        color: #b6b7b9;
+        padding: 1rem 0;
+        margin-top: 2rem;
+    }
+
+    /* Grid Layout */
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    /* Footer Sections */
+    .footer-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* Footer Links */
+    .footer-links {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .footer-links a {
+        color: #b6b7b9;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        color: #7fc142;
+    }
+
+    /* Social Links */
+    .social-links {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .social-links a {
+        color: #b6b7b9;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+        color: #7fc142;
+    }
+
+    /* Copyright Section */
+    .copyright {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(182, 183, 185, 0.2);
+        margin-top: 2rem;
+        font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .footer-grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .social-links {
+            justify-content: center;
+        }
+    }
+    </style>
+
+
+        <footer class="footer">
+            <div class="footer-grid">
+                <!-- Left Section -->
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <div class="footer-links">
+                        <a href="{{route('index')}}">Home</a>
+                        <a href="#">Contact Us</a>
+                        <a href="{{route('privacy')}}">Privacy Policy</a>
+                        <a href="{{route('terms')}}">Terms & Conditions</a>
+                    </div>
+                </div>
+
+                <!-- Right Section -->
+                <div class="footer-section">
+                    <h3>Get Connected</h3>
+                    <div class="social-links">
+                        <a href="https://github.com/Mustafa-Yahia/Booking_System/tree/main" target="_blank" title="LinkedIn">LinkedIn</a>
+                        <a href="https://github.com/Mustafa-Yahia/Booking_System/tree/main" target="_blank" title="GitHub">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Section -->
+            <div class="copyright">
+                © 2025 Crowny Hotel. All rights reserved.
+            </div>
+        </footer>

@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+<script src="{{asset('js/admin/manageForms.js')}}" defer></script>
 <div class="container mt-4">
     <h1>Users List</h1>
 
@@ -37,6 +38,7 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Phone</th>
                 <th>Address</th>
                 <th>Role</th>
                 <th>Actions</th>
@@ -47,12 +49,13 @@
                 <tr>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
+                    <td>{{ $user->phone }}</td>
                     <td>{{ $user->address }}</td>
 
                     <td>{{ ucfirst($user->role) }}</td>
                     <td>
                         <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" style="display:inline-block;">
+                        <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" style="display:inline-block;" onsubmit="return validateDelete(event)">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Delete</button>

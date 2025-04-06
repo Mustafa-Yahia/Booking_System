@@ -1,0 +1,91 @@
+.body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    position: absolute;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.success {
+    color: green;
+    font-size: 16px;
+    display: none;
+    margin-top: 10px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+input[type="text"], input[type="password"], input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group div {
+    width: 48%;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.alert {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.card-logos { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+.card-logos img { height: 20px; margin-left: 10px; }

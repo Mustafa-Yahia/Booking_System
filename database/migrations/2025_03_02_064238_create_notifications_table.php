@@ -12,11 +12,12 @@ return new class extends Migration {
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->morphs('notifiable'); // يضيف notifiable_type و notifiable_id
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->nullableMorphs('notifiable');
             $table->string('title');
             $table->text('message');
             $table->boolean('is_read')->default(false);
-            $table->timestamp('read_at')->nullable(); // حل المشكلة هنا ✅
+            $table->timestamp('read_at')->nullable();
 
             $table->timestamps();
         });
