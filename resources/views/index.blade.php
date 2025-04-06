@@ -75,52 +75,129 @@
 
 
 
-{{-- ===================== Start Modal (Popup)  ========================= --}}
-<section class="about top">
-    <div class="container flex">
-      <div class="left">
+
+
+
+<!-- About Real Estate Section -->
+<section class="about-real-estate top">
+    <div class="container text-center">
         <div class="heading">
-          <h2>Modern Apartments in Jordan</h2>
+            <h2>Why Choose Our Real Estate Services?</h2>
         </div>
-        <p>Discover our luxurious and fully-equipped apartments in the heart of Jordan. Whether you're looking for a short-term stay or a long-term residence, our apartments offer comfort, convenience, and privacy. Enjoy spacious living areas, modern amenities, and breathtaking views. With various locations across the country, we provide the perfect home away from home for you.</p>
-      </div>
-      <div class="right">
-        <img src="{{ asset('storage/images/index/about.png') }}" alt="About Image">
-      </div>
+        <p>We provide top-notch real estate solutions with a wide range of properties to choose from. Whether you are looking for a luxury condo, a waterfront villa, or a city-center apartment, we have the perfect option for you. Our team ensures seamless transactions, verified listings, and excellent customer support.</p>
+        <p>With years of experience in the real estate market, we guarantee the best deals, professional guidance, and properties that match your expectations. Explore our featured listings and find your dream home today!</p>
     </div>
-  </section>
+</section>
 
 
-{{-- ===================== End Modal (Popup)  ========================= --}}
+<section class="featured-properties top">
+    <div class="container">
+        <div class="heading text-center">
+            <h2>Featured Properties</h2>
+            <p>Discover the finest real estate options in prime locations.</p>
+        </div>
 
 
+        <div class="property-categories d-flex flex-wrap justify-content-center gap-4">
+            <div class="property-category">
+                <h3>Luxury Condos</h3>
+                <p>Experience premium living with high-end amenities and stunning city views.</p>
+            </div>
 
-{{-- ===================== Start counter top ========================= --}}
-{{-- <section class="counter top">
-    <div class="container grid">
-      <div class="box">
-        <h1>2500</h1>
-        <hr>
-        <span>Customer</span>
-      </div>
-      <div class="box">
-        <h1>1250</h1>
-        <hr>
-        <span>Happy Customer</span>
-      </div>
-      <div class="box">
-        <h1>150</h1>
-        <hr>
-        <span>Expert Technicians</span>
-      </div>
-      <div class="box">
-        <h1>3550</h1>
-        <hr>
-        <span>Desktop Repaired</span>
-      </div>
+            <div class="property-category">
+                <h3>Waterfront Villas</h3>
+                <p>Relax by the sea in these luxurious and serene villas.</p>
+            </div>
+
+            <div class="property-category">
+                <h3>City Center Apartments</h3>
+                <p>Enjoy urban living with convenience and modern design.</p>
+            </div>
+        </div>
     </div>
-  </section> --}}
-{{-- ===================== End counter top ========================= --}}
+</section>
+
+
+{{-- <section class="featured-properties top">
+    <div class="container">
+        <div class="heading text-center">
+            <h2>Featured Properties</h2>
+            <p>Discover the finest real estate options in prime locations.</p>
+        </div>
+
+        <div class="property-categories d-flex flex-wrap justify-content-center gap-4">
+            <!-- Luxury Condos -->
+            <div class="property-category card shadow-sm border-3 rounded-3" style="width: 300px; height: 400px; cursor: pointer;">
+                <div class="image" style="width: 100%; height: 200px; overflow: hidden;">
+                    <img src="{{ asset('storage/images/properties/luxury-condo.jpg') }}" alt="Luxury Condos" class="card-img-top rounded-top" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="fw-bold">Luxury Condos</h5>
+                    <p>Experience premium living with high-end amenities and stunning city views.</p>
+                    <a href="#" class="btn" style="background-color: #7fc142; color: white;">View Listings</a>
+                </div>
+            </div>
+
+            <!-- Waterfront Villas -->
+            <div class="property-category card shadow-sm border-3 rounded-3" style="width: 300px; height: 400px; cursor: pointer;">
+                <div class="image" style="width: 100%; height: 200px; overflow: hidden;">
+                    <img src="{{ asset('storage/images/properties/waterfront-villa.jpg') }}" alt="Waterfront Villas" class="card-img-top rounded-top" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="fw-bold">Waterfront Villas</h5>
+                    <p>Relax by the sea in these luxurious and serene villas.</p>
+                    <a href="#" class="btn" style="background-color: #7fc142; color: white;">View Listings</a>
+                </div>
+            </div>
+
+            <!-- City Center Apartments -->
+            <div class="property-category card shadow-sm border-3 rounded-3" style="width: 300px; height: 400px; cursor: pointer;">
+                <div class="image" style="width: 100%; height: 200px; overflow: hidden;">
+                    <img src="{{ asset('storage/images/properties/city-center-apartment.jpg') }}" alt="City Center Apartments" class="card-img-top rounded-top" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="fw-bold">City Center Apartments</h5>
+                    <p>Enjoy urban living with convenience and modern design.</p>
+                    <a href="#" class="btn" style="background-color: #7fc142; color: white;">View Listings</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> --}}
+
+<section class="featured-properties top">
+    <div class="container">
+        <div class="heading text-center">
+            <h2>Featured Properties</h2>
+            <p>Discover our premium properties and special deals to find your dream home.</p>
+        </div>
+
+        <div class="property-categories d-flex flex-wrap justify-content-center gap-4">
+            <div class="property-category text-center" onclick="showDetails('luxury-condos')">
+                <h3>Luxury Condos</h3>
+                <p>Experience luxury living in our exclusive condominiums.</p>
+            </div>
+
+            <div class="property-category text-center" onclick="showDetails('waterfront-villas')">
+                <h3>Waterfront Villas</h3>
+                <p>Wake up to stunning waterfront views in our luxurious villas.</p>
+            </div>
+
+            <div class="property-category text-center" onclick="showDetails('city-center-apartments')">
+                <h3>City Center Apartments</h3>
+                <p>Live in the heart of the city with our modern and convenient apartments.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function showDetails(category) {
+        alert("More details about " + category.replace('-', ' '));
+    }
+</script>
+
+
 
 
 {{-- ===================== Start ٍsection Room ========================= --}}
