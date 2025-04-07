@@ -12,6 +12,24 @@
         <p >You have no bookings at the moment.</p>
     </div>
     @else
+            @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+
+        
     <h2 >My Bookings</h2>
 
         <table class="table">

@@ -76,6 +76,20 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-3">
+            <div style="height: 160px" class="card shadow-sm border-0 rounded-lg text-center">
+                <div class="card-header bg-danger text-white fw-bold">
+                    <i class="fas fa-dollar-sign fa-lg"></i> Profit
+                </div>
+                <div class="card-body">
+                    <h2 class="fw-bold text-danger">${{ number_format($totalRevenue * 0.05, 2) }}</h2>
+                    <div>
+                        <span>5% of each booking</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     {{-- Chart Section --}}

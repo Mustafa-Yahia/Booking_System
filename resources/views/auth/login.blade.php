@@ -34,9 +34,9 @@
             <div class="d-flex justify-content-between mb-3">
 
                 <!-- Forgot Password Link -->
-                <div>
+                {{-- <div>
                     <a href="{{ route('password.request') }}" style="color: #000;">Forgot Password?</a>
-                </div>
+                </div> --}}
             </div>
 
             <div class="input-group">

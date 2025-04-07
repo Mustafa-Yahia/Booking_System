@@ -36,13 +36,13 @@
                     <i class="fas fa-dollar-sign fa-lg"></i> My Revenue
                 </div>
                 <div class="card-body">
-                    <h2 class="fw-bold text-danger">${{ number_format($myTotalRevenue, 2) }}</h2>
+                    <h2 class="fw-bold text-danger">{{ number_format($myTotalRevenue  - ($myTotalRevenue * 0.05 ), 2) }} JOD</h2>
                     <div class="progress">
                         <div class="progress-bar bg-danger" style="width: {{ ($myTotalRevenue / 100000) * 100 }}%">
-                            ${{ number_format($myTotalRevenue, 2) }}
+                            {{ number_format($myTotalRevenue , 2) }}JOD
                         </div>
                     </div>
-                    <span>Target is $100,000/year</span>
+                    <span>Target is 100,000 JOD/year</span>
                 </div>
             </div>
         </div>

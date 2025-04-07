@@ -5,6 +5,8 @@
 @section('content')
     <div class="container py-5 mt-4" style="margin-left: 250px;">
         <h2 class="text-center mb-5 fw-bold">🏠 Add New Property</h2>
+        <strong class="border border-5 rounded p-2">Note we will take 5% fee for each booking</strong>
+
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -14,7 +16,7 @@
                         </ul>
                     </div>
                 @endif
-        <div class="card shadow-sm border-0 rounded-lg p-4">
+        <div class="card shadow-sm border-0 rounded-lg p-4 mt-3">
             <form action="{{ route('lessor.properties.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">

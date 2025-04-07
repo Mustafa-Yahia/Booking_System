@@ -29,32 +29,35 @@
                             </div>
 
                             <!-- Location filter -->
-                            {{-- <div class="mb-3">
-                                <select name="location" class="form-select">
+                            <div class="mb-3">
+                                <select name="city" class="form-select">
                                     <option value="">Select Location</option>
-                                    <option value="city1">City 1</option>
-                                    <option value="city2">City 2</option>
-                                    <option value="city3">City 3</option>
+                                    @foreach ($uniqueProperties as $property)
+                                        <option value="{{ $property->location }}"
+                                            @if(request('city') == $property->location) selected @endif>
+                                            {{ $property->location }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <!-- Property type filter -->
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <select name="type" class="form-select">
                                     <option value="">Select Type</option>
                                     <option value="apartment">Apartment</option>
                                     <option value="house">House</option>
                                     <option value="villa">Villa</option>
                                 </select>
-                            </div>
+                            </div> --}}
 
                             <!-- Amenities filter -->
-                            <div class="mb-3">
-                                <label class="form-check-label">Amenities</label><br>
+                            {{-- <div class="mb-3">
+                                <label class="form-check-label">Amenities</label><br> --}}
                                 <!-- Amenities checkboxes -->
 
 
-                            </div> --}}
+                            {{-- </div> --}}
 
                             <!-- Apply Filters button -->
                             <button type="submit" class="btn  w-100" style="background-color: #7fc142; color: #fff" >Apply Filters</button>
@@ -66,6 +69,9 @@
                 <div class="col-md-9 mb-4">
                     <div class="row">
                         <!-- Loop through each property and display details -->
+                        @if($properties->count() == 0 )
+                        <p class="error">No properties found</p>
+                        @endif
                         @foreach($properties as $property)
                         <div class="col-md-4 mb-4">
                             <div class="card shadow-sm border-0 rounded-3" style="width: 100%; height: 100%; display: flex; flex-direction: column; cursor: pointer;">

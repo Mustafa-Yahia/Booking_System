@@ -80,10 +80,13 @@ public function index(Request $request)
             $query->where('status', $request->input('status'));
         }
 
+
+
         $properties = $query->get();
         return view('lessor.properties.index', compact('properties'));
         }
         // here if the user is not a lessor
+        
         $properties = Property::all();
         return view('index', compact('properties'));
     }
@@ -104,9 +107,13 @@ public function index(Request $request)
             $query->where('price_per_day', '<=', $request->input('price'));
         }
 
-        $properties = $query->get();
+        if ($request->has('city') && $request->input('city') != '') {
+            $query->where('location', $request->input('city'));
+        }
 
-        return view('renter.real-state', compact('properties'));
+        $properties = $query->get();
+        $uniqueProperties = $properties->unique('location');
+        return view('renter.real-state', compact('properties','uniqueProperties' ));
     }
 
 

@@ -55,6 +55,7 @@ class BookingController extends Controller
             'end_date' => $request->end_date,
             'status' => 'pending',
             'total' => $request->total,
+            'fee' => ($request->total * 0.05), // Assuming a 5% fee
 
         ]);
 

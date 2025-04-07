@@ -237,13 +237,19 @@ public function destroy($id)
                                 ->groupBy('month')
                                 ->orderBy('month')
                                 ->get();
-
+        // monthlyRevenue = [
+        //     (object) ['revenue' => 1000, 'month' => 1],
+        //     (object) ['revenue' => 2000, 'month' => 2],
+        //     (object) ['revenue' => 1500, 'month' => 3],
+        //     ...
         $monthlyBookings = Booking::selectRaw('COUNT(id) as bookings, MONTH(start_date) as month')
                                 ->groupBy('month')
                                 ->orderBy('month')
                                 ->get();
 
         $revenueData = array_fill(1, 12, 0);
+        // [1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0, 8 => 0, 9 => 0, 10 => 0, 11 => 0, 12 => 0]
+
         $bookingsData = array_fill(1, 12, 0);
 
         foreach ($monthlyRevenue as $revenue) {
@@ -253,6 +259,9 @@ public function destroy($id)
         foreach ($monthlyBookings as $booking) {
             $bookingsData[$booking->month] = $booking->bookings;
         }
+
+        // $revenueData = [1 => 5000, 2 => 6000, 3 => 0, 4 => 8000, ...];
+        // $bookingsData = [1 => 10, 2 => 15, 3 => 0, 4 => 20, ...];
 
         return view('admin.stats', compact('propertiesCount', 'usersCount', 'bookingsCount', 'totalRevenue', 'revenueData', 'bookingsData'));
     }

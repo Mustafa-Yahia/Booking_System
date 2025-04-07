@@ -19,6 +19,7 @@ return new class extends Migration
         $table->date('end_date');
         $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
         $table->decimal('total',10,2);
+        $table->decimal('fee',10,2)->default(0);
         $table->softDeletes();
         $table->timestamps();
     });

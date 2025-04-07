@@ -55,7 +55,7 @@ class UserController extends Controller
                 ]);
             }
 
-            return redirect()->route('profile');
+            return redirect()->route('profile')->with('success', 'Profile updated successfully!');
         }
 
         if($request->has('name')) {
@@ -68,7 +68,7 @@ class UserController extends Controller
             ]);
 
             $user->update($fields);
-            return redirect()->route('profile');
+            return redirect()->route('profile')->with('success', 'Profile updated successfully!');
         }
 
        if($request->has('password')) {

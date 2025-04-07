@@ -79,7 +79,7 @@
 <section class="rooms" id="rooms">
     <div class="container mt-5">
         <div class="heading text-center mb-4">
-            <h2>Real Estate Category</h2>
+            <h2>Real Estate</h2>
             <p>Explore our amazing properties from different lessors</p>
         </div>
 
@@ -87,7 +87,7 @@
             <div class="owl-carousel owl-carousel1 owl-theme d-flex flex-wrap justify-content-center gap-4">
                 @foreach($properties as $property)
                 <div class="item">
-                    <a href="#" class="text-decoration-none text-dark">
+                    <a href="{{route('properties.show', $property->id)}}" class="text-decoration-none text-dark">
                         <div class="card shadow-sm border-3 rounded-3" style="max-width: 350px; height: 480px; display: flex; flex-direction: column; cursor: pointer;">
 
 

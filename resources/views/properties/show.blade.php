@@ -89,6 +89,21 @@
 
     {{-- displays reviews --}}
     <div class="reviews-section">
+        <div class="rate d-flex mb-2">
+            @php
+                $averageRating = $property->reviews->avg('rating'); // Calculate the average rating
+            @endphp
+
+            @for ($i = 0; $i < 5; $i++)
+                @if ($i < $averageRating)
+                    <i class="fa fa-star text-warning"></i> <!-- Filled star -->
+                @else
+                    <i class="fa fa-star text-secondary"></i> <!-- Empty star -->
+                @endif
+            @endfor
+
+            <p class="ms-2">{{ number_format($averageRating, 1) }} / 5</p> <!-- Display the average rating -->
+        </div>
 
         @if($reviews->count() > 0)
         <h2 class="text-center">Reviews</h2>

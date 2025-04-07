@@ -40,20 +40,21 @@
           <span class="text">Monday - Friday (9:00 AM to 5:00 PM)</span>
         </div>
       </div>
-    @if(session('success') || session('error'))
-      <ul class="alert-messages">
         @if(session('success'))
-        <li class="alert alert-success">
-          {{ session('success') }}
-        </li>
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
         @endif
-        @if(session('error'))
-        <li class="alert alert-danger">
-          {{ session('error') }}
-        </li>
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
-      </ul>
-    @endif
       <div class="contact-form" >
         <form method="POST" action="{{ route('contact.store') }}">
             @csrf
@@ -63,10 +64,12 @@
           </div>
           <div>
             <input type="email" class="form-control" placeholder="E-mail" name="email">
-            <input type="number" class="form-control" placeholder="Phone" name="phone">
+            <input type="number" class="form-control" placeholder="Phone must start with 078/079/077" name="phone">
           </div>
           <textarea name="message" rows="5" placeholder="Message" class="form-control"></textarea>
+          <div class="form-text">Max 500 charachers</div>
           <input type="submit" class="send-btn" value="Send Message">
+
         </form>
 
         <div>

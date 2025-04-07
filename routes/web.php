@@ -158,12 +158,13 @@ Route::get('/', [PropertyController::class, 'index'])->name('index');
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('real-state', [PropertyController::class, 'realState'])->name('properties.index'); 
-    Route::get('contact-us', function () {
-        return view('renter.contactus');
-    })->name('contact-us');
+    Route::get('real-state', [PropertyController::class, 'realState'])->name('properties.index');
+
 });
 
+Route::get('contact-us', function () {
+    return view('renter.contactus');
+})->name('contact-us');
 //Mustafa
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');

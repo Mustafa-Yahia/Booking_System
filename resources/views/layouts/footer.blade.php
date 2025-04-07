@@ -141,7 +141,7 @@ footer ul li a {
                     <h3>Quick Links</h3>
                     <div class="footer-links">
                         <a href="{{route('index')}}">Home</a>
-                        <a href="#">Contact Us</a>
+                        <a href="{{route('contact-us')}}">Contact Us</a>
                         <a href="{{route('privacy')}}">Privacy Policy</a>
                         <a href="{{route('terms')}}">Terms & Conditions</a>
                     </div>
